@@ -1,0 +1,14 @@
+{
+  "name": "jdonut-mock-server",
+  "private": true,
+  "version": "1.0.0",
+  "description": "json-server mock API for J'Donuts (/v1, {data,error,meta} envelope)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "LATENCY_MS=800 node server.js",
+    "flaky": "FAIL_RATE=0.3 node server.js",
+    "sync-seed": "node scripts/sync-seed.js"
+  },
+  "dependencies": { "json-server": "0.17.4" }
+}

@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-07T00:00:00.000Z",
+  "data": [
+    {
+      "id": "b_buy2get1",
+      "title": "Buy 2 get 1 free",
+      "subtitle": "Every Friday",
+      "imageUrl": "/static/images/banners/b_buy2get1.png",
+      "assetPath": "assets/images/banners/b_buy2get1.png",
+      "productId": "p_coconut",
+      "order": 1
+    },
+    {
+      "id": "b_matcha",
+      "title": "New: Matcha Glaze",
+      "subtitle": "15% off this week",
+      "imageUrl": "/static/images/banners/b_matcha.png",
+      "assetPath": "assets/images/banners/b_matcha.png",
+      "productId": "p_matcha",
+      "order": 2
+    }
+  ]
+}

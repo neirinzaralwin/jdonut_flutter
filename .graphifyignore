@@ -1,0 +1,13 @@
+# Keep the graph to source + docs. Generated / vendor / platform code excluded.
+.graphify-local/
+mock_server/node_modules/
+node_modules/
+app/android/
+app/ios/
+app/build/
+app/.dart_tool/
+app/assets/
+app/lib/l10n/gen/
+**/*.g.dart
+**/*.freezed.dart
+design_refs/

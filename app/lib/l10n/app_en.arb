@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "appTitle": "J'Donuts",
+  "onboardingTitle": "Round food for every mood",
+  "letsGetStarted": "Let's get started",
+  "alreadyHaveAccount": "Already have an account?",
+  "logIn": "Log in",
+  "continueLabel": "Continue",
+  "fakeOtpHint": "Use 123456"
+}

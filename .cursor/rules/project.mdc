@@ -1,0 +1,5 @@
+---
+description: jdonut_flutter rules — read AGENTS.md and docs/
+alwaysApply: true
+---
+Follow `AGENTS.md`. Spec: `docs/code-test/` (wins on conflict). Rules: `docs/knowledge-base/`.

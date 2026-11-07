@@ -1,0 +1,13 @@
+.DS_Store
+design_refs/
+*.pdf
+node_modules/
+mock_server/node_modules/
+
+# Graphify (local knowledge graph + install)
+.graphify/
+.graphify-local/node_modules/
+graphify-out/
+/.graphify_*
+
+.claude/settings.local.json

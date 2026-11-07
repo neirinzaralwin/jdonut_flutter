@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-07T00:00:00.000Z",
+  "data": [
+    {
+      "id": "seasonal",
+      "title": "Seasonal specials",
+      "order": 1,
+      "productIds": [
+        "p_coconut",
+        "p_matcha",
+        "p_strawberry"
+      ]
+    },
+    {
+      "id": "popular",
+      "title": "Popular",
+      "order": 2,
+      "productIds": [
+        "p_chocolate",
+        "p_caramel",
+        "p_strawberry",
+        "p_iced_latte"
+      ]
+    },
+    {
+      "id": "order_again",
+      "title": "Order again",
+      "order": 3,
+      "productIds": [
+        "p_coconut",
+        "p_iced_latte"
+      ]
+    }
+  ]
+}

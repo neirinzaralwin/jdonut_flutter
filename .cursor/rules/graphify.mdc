@@ -1,0 +1,5 @@
+---
+description: When to query graphify — architecture and connections only
+alwaysApply: true
+---
+Use `bash scripts/graphify.sh query|path|explain` before Read/Grep when you don't know which files are involved. Skip for commands, tests, docs, known-file edits. After code changes: `bash scripts/graphify.sh update .`. Details: `docs/knowledge-base/graphify_guide.md`.

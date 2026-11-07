@@ -1,0 +1,10 @@
+{
+  "@@locale": "my",
+  "appTitle": "J'Donuts",
+  "onboardingTitle": "စိတ်ကြိုက်မုန့်ဝိုင်းလေးများ",
+  "letsGetStarted": "စတင်ကြစို့",
+  "alreadyHaveAccount": "အကောင့်ရှိပြီးသားလား?",
+  "logIn": "ဝင်မည်",
+  "continueLabel": "ဆက်လုပ်မည်",
+  "fakeOtpHint": "123456 ကိုသုံးပါ"
+}

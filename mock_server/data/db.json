@@ -1,0 +1,38 @@
+{
+  "meta": { "updatedAt": "2026-11-07T00:00:00.000Z" },
+  "products": [
+    { "id": "p_coconut", "code": "JD022123", "name": "Coconut Donut", "priceMmk": 3200, "isNew": true, "discountPercent": null,
+      "imageUrl": "/static/images/products/p_coconut.png", "assetPath": "assets/images/products/p_coconut.png",
+      "description": "Enjoy our scrumptious donuts topped with toasted coconut flakes on a creamy vanilla glaze." },
+    { "id": "p_strawberry", "code": "JD022124", "name": "Strawberry Sprinkle", "priceMmk": 2800, "isNew": false, "discountPercent": 10,
+      "imageUrl": "/static/images/products/p_strawberry.png", "assetPath": "assets/images/products/p_strawberry.png",
+      "description": "Classic ring donut dipped in strawberry icing with rainbow sprinkles." },
+    { "id": "p_chocolate", "code": "JD022125", "name": "Double Chocolate", "priceMmk": 3500, "isNew": false, "discountPercent": null,
+      "imageUrl": "/static/images/products/p_chocolate.png", "assetPath": "assets/images/products/p_chocolate.png",
+      "description": "Chocolate dough, chocolate glaze, chocolate drizzle." },
+    { "id": "p_matcha", "code": "JD022126", "name": "Matcha Glaze", "priceMmk": 3800, "isNew": true, "discountPercent": 15,
+      "imageUrl": "/static/images/products/p_matcha.png", "assetPath": "assets/images/products/p_matcha.png",
+      "description": "Japanese matcha glaze with white chocolate crumble." },
+    { "id": "p_caramel", "code": "JD022127", "name": "Salted Caramel", "priceMmk": 3300, "isNew": false, "discountPercent": null,
+      "imageUrl": "/static/images/products/p_caramel.png", "assetPath": "assets/images/products/p_caramel.png",
+      "description": "Caramel-filled donut finished with sea salt flakes." },
+    { "id": "p_iced_latte", "code": "JD030001", "name": "Iced Latte", "priceMmk": 4500, "isNew": false, "discountPercent": null,
+      "imageUrl": "/static/images/products/p_iced_latte.png", "assetPath": "assets/images/products/p_iced_latte.png",
+      "description": "Double-shot espresso over milk and ice." }
+  ],
+  "banners": [
+    { "id": "b_buy2get1", "title": "Buy 2 get 1 free", "subtitle": "Every Friday", "imageUrl": "/static/images/banners/b_buy2get1.png", "assetPath": "assets/images/banners/b_buy2get1.png", "productId": "p_coconut", "order": 1 },
+    { "id": "b_matcha", "title": "New: Matcha Glaze", "subtitle": "15% off this week", "imageUrl": "/static/images/banners/b_matcha.png", "assetPath": "assets/images/banners/b_matcha.png", "productId": "p_matcha", "order": 2 }
+  ],
+  "sections": [
+    { "id": "seasonal", "title": "Seasonal specials", "order": 1, "productIds": ["p_coconut", "p_matcha", "p_strawberry"] },
+    { "id": "popular", "title": "Popular", "order": 2, "productIds": ["p_chocolate", "p_caramel", "p_strawberry", "p_iced_latte"] },
+    { "id": "order_again", "title": "Order again", "order": 3, "productIds": ["p_coconut", "p_iced_latte"] }
+  ],
+  "shops": [
+    { "id": "s_yankin", "name": "J'Donuts Yankin", "address": "Kabar Aye Pagoda Rd, Yankin", "distanceKm": 1.2, "openHours": "8:00 AM – 9:00 PM", "imageUrl": "/static/images/shops/s_yankin.png", "assetPath": "assets/images/shops/s_yankin.png" },
+    { "id": "s_junction", "name": "J'Donuts Junction City", "address": "Bogyoke Aung San Rd, Pabedan", "distanceKm": 3.4, "openHours": "9:00 AM – 9:30 PM", "imageUrl": "/static/images/shops/s_junction.png", "assetPath": "assets/images/shops/s_junction.png" },
+    { "id": "s_myay_nu", "name": "J'Donuts Myay Nu", "address": "Myay Nu St, Sanchaung", "distanceKm": 4.1, "openHours": "8:00 AM – 9:00 PM", "imageUrl": "/static/images/shops/s_myay_nu.png", "assetPath": "assets/images/shops/s_myay_nu.png" },
+    { "id": "s_hledan", "name": "J'Donuts Hledan", "address": "Insein Rd, Hledan", "distanceKm": 5.0, "openHours": "8:30 AM – 9:00 PM", "imageUrl": "/static/images/shops/s_hledan.png", "assetPath": "assets/images/shops/s_hledan.png" }
+  ]
+}

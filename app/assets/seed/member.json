@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "data": {
+    "member": { "id": "m_001", "tier": "silver", "points": 680000, "pointsToNextTier": 500, "nextTier": "gold",
+      "tierProgress": 0.62, "notificationCount": 3, "rewardsCount": 3, "photoAssetPath": "assets/images/onboarding/avatar.png" },
+    "tiers": [
+      { "id": "silver", "name": "Silver", "order": 1, "minPoints": 0 },
+      { "id": "gold", "name": "Gold", "order": 2, "minPoints": 1000000 },
+      { "id": "platinum", "name": "Platinum", "order": 3, "minPoints": 2500000 }
+    ],
+    "challenges": [
+      { "id": "c_donut_week", "tab": "eat_more", "title": "Eat 4 donuts this week", "artwork": "donut", "progress": 1, "goal": 4, "rewardPoints": 500 },
+      { "id": "c_donut_month", "tab": "eat_more", "title": "Donut lover", "artwork": "donut", "progress": 4, "goal": 4, "rewardPoints": 1000 },
+      { "id": "c_coffee", "tab": "eat_more", "title": "Coffee club", "artwork": "coffee", "progress": 9, "goal": 12, "rewardPoints": 1500 },
+      { "id": "g_birthday", "tab": "gift", "title": "Birthday gift", "artwork": "donut", "progress": 0, "goal": 1, "rewardPoints": 0 }
+    ]
+  }
+}

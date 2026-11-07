@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-07T00:00:00.000Z",
+  "data": [
+    {
+      "id": "s_yankin",
+      "name": "J'Donuts Yankin",
+      "address": "Kabar Aye Pagoda Rd, Yankin",
+      "distanceKm": 1.2,
+      "openHours": "8:00 AM – 9:00 PM",
+      "imageUrl": "/static/images/shops/s_yankin.png",
+      "assetPath": "assets/images/shops/s_yankin.png"
+    },
+    {
+      "id": "s_junction",
+      "name": "J'Donuts Junction City",
+      "address": "Bogyoke Aung San Rd, Pabedan",
+      "distanceKm": 3.4,
+      "openHours": "9:00 AM – 9:30 PM",
+      "imageUrl": "/static/images/shops/s_junction.png",
+      "assetPath": "assets/images/shops/s_junction.png"
+    },
+    {
+      "id": "s_myay_nu",
+      "name": "J'Donuts Myay Nu",
+      "address": "Myay Nu St, Sanchaung",
+      "distanceKm": 4.1,
+      "openHours": "8:00 AM – 9:00 PM",
+      "imageUrl": "/static/images/shops/s_myay_nu.png",
+      "assetPath": "assets/images/shops/s_myay_nu.png"
+    },
+    {
+      "id": "s_hledan",
+      "name": "J'Donuts Hledan",
+      "address": "Insein Rd, Hledan",
+      "distanceKm": 5,
+      "openHours": "8:30 AM – 9:00 PM",
+      "imageUrl": "/static/images/shops/s_hledan.png",
+      "assetPath": "assets/images/shops/s_hledan.png"
+    }
+  ]
+}

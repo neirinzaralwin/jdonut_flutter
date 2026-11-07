@@ -4,7 +4,10 @@
 jdonut_flutter/                    ← git repo root
 ├── AGENTS.md / CLAUDE.md          ← agent entry points (both point to docs/)
 ├── README.md                      ← submission README (required sections in docs/code-test/07)
-├── docs/                          ← specs + decisions (this folder)
+├── docs/                          ← specs + feature diagrams + decisions
+│   ├── diagrams/                  ← Mermaid feature flows and file maps (`<feature>-diagram.md`)
+│   ├── code-test/                 ← task requirements
+│   └── knowledge-base/            ← engineering rules
 ├── mock_server/                   ← json-server (Node) — optional /v1 API
 │   ├── server.js                  ← envelope {data,error,meta}, /v1 rewrite, latency/offline toggles
 │   ├── data/db.json               ← canonical public data (products, banners, sections, shops)
@@ -40,7 +43,6 @@ jdonut_flutter/                    ← git repo root
 │   │                  presentation/{pages,widgets,providers})
 │   ├── test/                      ← mirrors lib/ (unit + widget)
 │   └── integration_test/          ← register → home → product detail
-└── .github/workflows/ci.yml       ← analyze + test
 ```
 
 ## Placement rules

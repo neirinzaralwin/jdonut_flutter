@@ -19,6 +19,8 @@ Short rationale for each choice. "Brief" = the code test requirement it answers.
 | Tests | **mocktail** | mockito | No codegen, null-safe mocks. |
 | l10n | **gen-l10n (ARB)** | easy_localization | Required by brief; built into Flutter; adds Burmese (`my`). |
 | Animation | **Flutter APIs + CustomPainter** | Lottie / Rive | Brief: most motion should use Flutter's own APIs; ring and progress art drawn with CustomPainter. |
+| Fonts | **Nunito** (headings) + **Nunito Sans** (body), bundled TTFs | google_fonts | Bundled so the first launch offline renders the right font (brief: airplane mode). Variable fonts; weight via `FontVariation`. |
+| Value equality | **freezed** | equatable | freezed already generates `==`/`hashCode`; adding equatable would duplicate it. |
 | Mock server | **json-server 0.17** | Express by hand, no server | Optional in brief. Zero-code REST from `db.json`, plus a small wrapper for `/v1` and the `{data, error, meta}` envelope. |
 
 ## Architecture decisions
@@ -34,5 +36,5 @@ Short rationale for each choice. "Brief" = the code test requirement it answers.
 | `AuthRepository` interface + `FakeAuthRepository` (1 s delay) | Brief; real API replaces it without touching UI. |
 | Countdown from stored `expiresAt` | Survives backgrounding; no drift from a decrementing timer. |
 | All durations/curves in `app_motion.dart` | Brief: named constants in one motion file; one place to honour Reduce Motion. |
-| Design tokens in one theme | Brief: no hard-coded colours in widgets. |
-| Monorepo: `app/`, `mock_server/`, `docs/` | App, optional server and specs versioned together; CI runs from `app/`. |
+| Design tokens in one theme (`ColorScheme` + `ThemeExtension`) | Brief: no hard-coded colours in widgets. Palette sampled from the PDF screens; see `docs/knowledge-base/design_system.md`. |
+| Monorepo: `app/`, `mock_server/`, `docs/` | App, optional server and specs are kept together. |

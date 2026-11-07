@@ -8,3 +8,5 @@ Read in this order before writing code:
 4. `deliverables-checklist.md` → tick boxes before submitting
 
 `code-test/` is the requirement spec. The other files are **our decisions**; update them when a decision changes.
+
+Current feature flows and file responsibilities are mapped under `diagrams/`. Follow the Mermaid diagram rule in `AGENTS.md` when a feature is added or its architecture/flow changes.

@@ -11,6 +11,7 @@ If 2 conflicts with 1, follow 1 and fix the doc.
 ## 1. Read before every task
 - `docs/README.md`, then `docs/knowledge-base/README.md`.
 - Always: `coding_rules.md`, `module_boundaries.md`, `folder_structure.md`.
+- Any UI work: `design_system.md` (palette from the PDF designs, Nunito headings / Nunito Sans body).
 - By task:
   | Task touches | Read |
   |---|---|
@@ -30,13 +31,22 @@ Local knowledge graph in `.graphify/` (see `docs/knowledge-base/graphify_guide.m
 - After changing code: `bash scripts/graphify.sh update .`
 - Pass this rule to every subagent that explores code.
 
-## 3. Repo layout
+## 3. Mermaid feature diagrams
+- When adding a feature, or materially changing its user flow, routing, state ownership, data flow, or layer boundaries, create or update a Mermaid guide at `docs/diagrams/<feature>-diagram.md`.
+- Use descriptive feature names such as `auth-diagram.md`; do not use task numbers as filenames.
+- Include a Mermaid diagram of the current runtime flow and/or layer dependencies, plus a concise file map covering the main implementation, supporting core files, and tests.
+- Describe the code as it exists. Verify file paths and relationships against the implementation; label generated files as generated and never present them as hand-edited sources.
+- Skip diagrams for isolated edits that do not change feature behavior or structure (for example, copy fixes, formatting, or dependency updates).
+- Update the feature diagram in the same change when implementation changes make it stale.
+
+## 4. Repo layout
 - `app/` — Flutter project (run Flutter commands here)
 - `mock_server/` — json-server (`npm start`), contract in `docs/mock-server.md`
-- `docs/` — spec (`code-test/`) + rules (`knowledge-base/`)
+- `docs/` — specs (`code-test/`), feature diagrams (`diagrams/`), and rules (`knowledge-base/`)
 - `DECISIONS.md` — why each package/architecture choice; update it when a choice changes
+- `DEVELOPER_GUIDE.md` — step-by-step routine and commands for building a feature
 
-## 4. Commands
+## 5. Commands
 ```bash
 cd app
 flutter pub get
@@ -48,16 +58,17 @@ flutter test integration_test
 cd ../mock_server && npm start
 ```
 
-## 5. Engineering mindset — lazy senior dev
+## 6. Engineering mindset — lazy senior dev
 Efficient, not careless. Before writing code: needed at all? → already in repo? → SDK does it? → installed package does it? → then minimum code. Understand and trace the real flow first. Fix root causes once in the shared function. No unrequested abstractions, deps or boilerplate — but the brief's required structure (3 layers, `AuthRepository`, `Result`, DI) is requested.
 Never lazy about: validation, offline behaviour, error/empty/loading states, Reduce Motion, accessibility, tests.
 
-## 6. Non-negotiables (full list: `knowledge-base/coding_rules.md`)
+## 7. Non-negotiables (full list: `knowledge-base/coding_rules.md`)
 - Domain: pure Dart, no `package:flutter`/Dio/Drift/Riverpod.
 - UI reads only Drift via repositories; network only upserts into Drift.
 - Repos return `Result<T>`; specific exceptions mapped to `Failure`; `return await` inside `try`.
 - Validators = pure functions in `features/auth/domain/validators/`, unit test per rule.
-- No hard-coded colours, spacing, strings, durations, magic numbers in widgets — tokens / ARB / `app_motion.dart` / `AppConstants`.
+- No hard-coded colours, spacing, strings, durations, magic numbers in widgets — `context.colors` / `context.appColors` / `context.text` / `AppSpacing` / ARB / `app_motion.dart` / `AppConstants`.
+- New package? Only if the brief needs it or it removes real code; add a line to `DECISIONS.md`.
 - Riverpod only (state + DI); `Notifier`/`AsyncNotifier`, no `StateNotifier`. No services built in widgets.
 - Shared widgets in `core/widgets/` (AppButton, AppTextField, AppNetworkImage, Skeleton, empty/error states) — reuse, don't re-roll.
 - Every screen: loading (skeleton), empty, error. Double tap = one request.
@@ -66,5 +77,5 @@ Never lazy about: validation, offline behaviour, error/empty/loading states, Red
 - Never commit design screenshots (`design_refs/` is ignored).
 - Small conventional commits.
 
-## 7. Definition of done
+## 8. Definition of done
 `flutter analyze` clean · `flutter test` green · module-boundary checklist passes · graph updated · relevant `docs/` updated if a decision changed · `docs/deliverables-checklist.md` ticked.

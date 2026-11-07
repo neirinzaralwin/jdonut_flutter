@@ -4,16 +4,26 @@
 
 ## Quick start
 ```bash
-# 1. mock server (optional)
+# 1. mock server (optional — app works fully offline without it)
 cd mock_server && npm install && npm start
+
 # 2. app
-cd app && ./tool/bootstrap.sh     # first time only: platform folders + deps
-flutter run
+cd app
+flutter pub get
+dart run build_runner build --delete-conflicting-outputs
+flutter gen-l10n
+flutter run                                        # iOS simulator
+flutter run --dart-define=API_BASE_URL=http://10.0.2.2:3000   # Android emulator
 ```
+`app/tool/bootstrap.sh` is a one-time scaffolding script for the author (platform folders + adding packages); reviewers don't need it.
+
 Fake OTP code: **123456**
 
 ## Versions
 Flutter: _TBD_ · Dart: _TBD_
+
+## Developer guide
+Daily routine and commands: [`DEVELOPER_GUIDE.md`](DEVELOPER_GUIDE.md).
 
 ## Decisions
 Why each package and design choice: see [`DECISIONS.md`](DECISIONS.md).

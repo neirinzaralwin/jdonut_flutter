@@ -19,7 +19,7 @@ Before writing code, stop at the first rung that holds:
 - `const` constructors wherever possible; expression bodies (`=>`) for one-liners.
 - Functions ≈ ≤ 20 lines, files ≈ ≤ 300 lines (brief). `build()` with more than one logical section → extract widgets.
 - No `print`; use `debugPrint` or the Dio logging interceptor (debug only).
-- Prefer Dart 3 features: `sealed` + `switch` pattern matching, records, `final class`.
+- Use Dart 3 features where they fit: `switch` pattern matching, records, `final class`; `sealed` only per "When to use sealed classes" below.
 
 ## Naming
 | Element | Convention | Example |
@@ -47,20 +47,43 @@ Names say what things are — no `data`, `info`, `helper`, `manager`, `util2`.
 - Domain never imports `package:flutter/*`, Dio, Drift or Riverpod.
 
 ## Constants & tokens (no magic numbers, no hard-coded colours — brief requirement)
+Full spec: `design_system.md`. Import `package:jdonut/core/theme/theme.dart` once; use `context.colors`, `context.text`, `context.appColors`, static `AppSpacing`/`AppRadii`/`AppSizes`.
 | What | Where |
 |---|---|
-| Colours | `core/theme/app_colors.dart` (`AppColors.*`) → exposed via `ThemeData`/`ThemeExtension` |
-| Text styles | `core/theme/app_typography.dart` (`AppTypography.*`) |
-| Spacing / gaps / padding | `core/theme/app_spacing.dart` (`AppSpacing.s4` …) |
-| Radii / sizes | `core/theme/app_radii.dart`, `app_sizes.dart` |
+| Colours | `context.colors.*` / `context.appColors.*` (raw palette `AppPalette` only inside `core/theme/`) |
+| Text styles | `context.text.*` (+ `AppTypography.numeric`) — Nunito headings, Nunito Sans body |
+| Spacing / gaps / padding | `AppSpacing.*` (`core/theme/app_spacing.dart`) |
+| Radii / sizes | `AppRadii.*`, `AppSizes.*` (same file) |
 | Durations / curves | `core/motion/app_motion.dart` |
 | Business rules | `core/constants/app_constants.dart` (OTP code, min age, lengths) |
 | API paths | `core/network/api_paths.dart` |
 | Routes | `core/router/app_routes.dart` |
 | User-facing strings | ARB (`lib/l10n/app_en.arb`, `app_my.arb`) via `context.l10n` |
 
-- `EdgeInsets.all(24)`, `SizedBox(height: 16)`, `Color(0xff…)`, `Colors.grey`, `Duration(milliseconds: 300)` inside a feature = violation.
-- Text styles start from a token and extend with `.copyWith`.
+- `EdgeInsets.all(24)`, `SizedBox(height: 16)`, `Color(0xff…)`, `Colors.grey`, `AppPalette.pink` in a widget, `Duration(milliseconds: 300)` inside a feature = violation.
+- Text styles start from a token and extend with `.copyWith` — never `TextStyle(fontSize: …)` from scratch (it loses the font's weight variation).
+
+## Packages
+- Add a package only when it's required/recommended by the brief or saves real code. Check `DECISIONS.md` first; record any new package there with a one-line reason.
+- Not used on purpose: `equatable` (freezed already gives `==`), `google_fonts` (fonts bundled for offline), `get_it` (Riverpod is the DI), `sqlite3_flutter_libs` (bundled by `drift_flutter`).
+
+## When to use sealed classes (only when necessary)
+Use a `sealed class` **only** when a value is exactly one of a fixed set of cases, the cases carry **different data**, and callers must handle every case (exhaustive `switch`). Otherwise don't.
+
+| Use sealed | Example in jdonut |
+|---|---|
+| Result / failures | `Result<T>` → `Ok`/`Err`; `Failure` subtypes; `OtpOutcome` → `SignedIn(user)` / `ContinueRegistration` |
+| State with case-specific data driving different UI | `SessionState` (`SessionUnknown`/`Authenticated(user)`/`Unauthenticated`), `SyncState` (`failed(failure)`) |
+| Variants rendered differently | `ChallengeArtwork` → `donut(quarters)` / `coffee(filled, total)` |
+
+| Don't use sealed | Use instead |
+|---|---|
+| Loading / data / error of a fetch | Riverpod `AsyncValue` (don't re-wrap) |
+| Single-shape data (`Product`, `Shop`, `Member`) | freezed class |
+| Cases with no data (tier, tab, online/offline, validator errors `PhoneError`/`NameError`/`DateOfBirthError`, `AuthFailureKind`) | `enum` (enhanced enum if it needs a label/colour) |
+| A single flag (`isSubmitting`) | field on the state |
+
+How to write: pure-domain types (`Result`, `Failure`, `SessionState`, `OtpOutcome`) → plain Dart 3 `sealed class` (no codegen in domain). Presentation state needing `copyWith` → freezed sealed union. Always consume with an exhaustive `switch` — no `default:` branch, so a new case fails compilation.
 
 ## Models
 - Domain entities: immutable (`freezed` or `final class` + `==`), no JSON.
@@ -99,8 +122,31 @@ Names say what things are — no `data`, `info`, `helper`, `manager`, `util2`.
 ## Fixed facts
 - Fake OTP: `123456`. Min age: `AppConstants.minimumAgeYears = 13`. Resend: 5:00. Max wrong OTPs: 3.
 
+## Brief → rule checklist (code test, Technical requirements + evaluation)
+Every line here is graded or a hard fail. Check before finishing a task.
+| Brief says | Rule |
+|---|---|
+| **Fail:** data hard-coded inside widgets | Widgets never contain product/banner/shop/member/challenge data, lists or prices — all come from Drift via providers (seeded from `assets/seed/*.json`). Placeholder screens show only l10n strings. |
+| **Fail:** doesn't build from README / crashes in main flow | README steps tested on a clean clone; no `!` on data that can be missing; every async path handles errors. |
+| Functions ~20 lines, files ~300 | Split early; `build()` sections → private widgets/files. |
+| Named constants, no magic numbers | Tokens / `AppConstants` / `app_motion.dart`. |
+| Names that say what things are | See Naming. |
+| `flutter analyze` clean | very_good_analysis, zero warnings/infos. |
+| Domain has no Flutter imports | See `module_boundaries.md`. |
+| No services created inside widgets | Riverpod providers only. |
+| Typed failures as Result, no swallowed exceptions | See Errors. |
+| Every screen: loading, error, empty | Skeleton / `AppErrorState` / `AppEmptyState`. |
+| No hard-coded colours; tokens in one theme | `context.colors` / `context.text` / `context.appColors`. |
+| Strings in ARB | `context.l10n`; Burmese keys kept in sync. |
+| 4.7"–6.9", text scale 1.3 | No fixed text heights; `maxLines` + `overflow`; test at 1.3. |
+| Durations/curves in one motion file, Reduce Motion | `motion_rules.md`. |
+| Double tap sends one request | Disabled button + notifier guard. |
+| AI tools allowed, **must explain every line** | Agents write only code that is idiomatic and explainable: no unexplained cleverness, no unused code, no copied snippets the author can't justify. Non-obvious decisions get a one-line `why` comment. |
+| Small readable commits | One concern per commit, conventional message. |
+
 ## Forbidden
 - Hard-coded colours/spacing/durations/strings in widgets.
+- Hard-coded **data** in widgets (products, prices, member, shops, challenges) — instant fail in the brief.
 - `package:flutter` in `domain/`.
 - Dio outside `core/network/`; secure storage outside `core/storage/`; Drift outside `core/database/` + feature `data/`.
 - Raw route strings outside `app_routes.dart`.

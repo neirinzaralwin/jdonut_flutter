@@ -1,9 +1,15 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jdonut/app.dart';
+import 'package:jdonut/features/auth/auth.dart';
 
-/// Initialise bindings, DB, seed data and ProviderScope here.
+/// Restores the session before the first frame, so a logged-in user lands
+/// on Home without a flash of Onboarding.
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // TODO(bootstrap): wrap in ProviderScope once flutter_riverpod is added.
-  runApp(const JDonutApp());
+  final container = ProviderContainer();
+  await container.read(sessionProvider.notifier).restore();
+  runApp(
+    UncontrolledProviderScope(container: container, child: const JDonutApp()),
+  );
 }

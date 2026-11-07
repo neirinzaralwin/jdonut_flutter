@@ -18,4 +18,4 @@
 - Mocks: `mocktail`. Override providers, never globals.
 - Drift: in-memory `NativeDatabase.memory()` for repo tests.
 - No golden tests unless time allows.
-- `flutter analyze && flutter test` before every commit; CI runs both.
+- Run `flutter analyze && flutter test` before every commit.

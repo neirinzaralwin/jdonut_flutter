@@ -17,8 +17,10 @@ Our engineering rules. `../code-test/` is **what** to build; this folder is **ho
 | `module_boundaries.md` | Importing across features or layers |
 | `solid_principles.md` | Adding classes/interfaces |
 | `resilience_and_offline.md` | Network, DB, auth, multi-step flows — **mandatory** for Task 1/2 |
+| `design_system.md` | Any UI — colours, fonts (Nunito / Nunito Sans), spacing, component look |
 | `motion_rules.md` | Any animation (Task 3, transitions) |
 | `testing_rules.md` | Writing or changing tests |
 | `graphify_guide.md` | Exploring code with the knowledge graph |
+| `../diagrams/<feature>-diagram.md` | Understanding a feature's current flow and file responsibilities |
 
 Origin: adapted from the `vint_flutter` knowledge base, reshaped for the code test's 3-layer clean architecture.

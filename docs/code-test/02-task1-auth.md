@@ -2,6 +2,8 @@
 
 Login/registration are fake, **every validation rule must work**.
 
+> **Scope note (our decision):** Task 1 is fully local. It does **not** use the json-server mock server (`docs/mock-server.md` serves only public catalog data and is read-only). No Dio / `core/network` imports in `features/auth`. Users → Drift `users` table; session → `flutter_secure_storage`; fake delay → `AppConstants.fakeAuthDelay`. A future `ApiAuthRepository` would replace `FakeAuthRepository` in one provider without touching UI.
+
 ## Repository contract
 - Auth sits behind an `AuthRepository` interface (domain).
 - Fake implementation waits ~1 s and stores users locally, so a real API can replace it without touching UI.

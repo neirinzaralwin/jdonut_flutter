@@ -8,6 +8,7 @@ import 'package:jdonut/core/l10n/l10n.dart';
 import 'package:jdonut/core/motion/app_motion.dart';
 import 'package:jdonut/core/motion/motion_context.dart';
 import 'package:jdonut/core/network/api_paths.dart';
+import 'package:jdonut/core/network/network_constants.dart';
 import 'package:jdonut/core/network/network_providers.dart';
 import 'package:jdonut/core/network/network_status.dart';
 import 'package:jdonut/core/theme/theme.dart';
@@ -73,7 +74,12 @@ class _ConnectionBannerState extends ConsumerState<ConnectionBanner> {
   Future<void> _confirmServer() async {
     final health = await ref
         .read(apiClientProvider)
-        .get<Object>(ApiPaths.health, (data) => data);
+        .get<Object>(
+          ApiPaths.health,
+          (data) => data,
+          timeout: NetworkConstants.probeTimeout,
+          retry: false,
+        );
     if (!mounted || health is! Ok || _wasOffline) return;
     _showBriefly(_BannerState.connected);
   }
@@ -89,7 +95,12 @@ class _ConnectionBannerState extends ConsumerState<ConnectionBanner> {
   Future<void> _probeServer() async {
     final health = await ref
         .read(apiClientProvider)
-        .get<Object>(ApiPaths.health, (data) => data);
+        .get<Object>(
+          ApiPaths.health,
+          (data) => data,
+          timeout: NetworkConstants.probeTimeout,
+          retry: false,
+        );
     if (!mounted || health is Ok || !_wasOffline) return;
     _scheduleProbe();
   }
@@ -238,25 +249,11 @@ class _Content extends StatelessWidget {
           key: ValueKey(state),
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              switch (state) {
-                _BannerState.connected => Icons.cloud_done_rounded,
-                _BannerState.backOnline => Icons.wifi_rounded,
-                _BannerState.offline ||
-                _BannerState.hidden => Icons.cloud_off_rounded,
-              },
-              size: AppSpacing.s4,
-              color: foreground,
-            ),
+            Icon(_icon, size: AppSpacing.s4, color: foreground),
             const SizedBox(width: AppSpacing.s2),
             Flexible(
               child: Text(
-                switch (state) {
-                  _BannerState.connected => context.l10n.connectedToServer,
-                  _BannerState.backOnline => context.l10n.backOnline,
-                  _BannerState.offline ||
-                  _BannerState.hidden => context.l10n.offlineBanner,
-                },
+                _message(context),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
@@ -268,4 +265,16 @@ class _Content extends StatelessWidget {
       ),
     );
   }
+
+  IconData get _icon => switch (state) {
+    _BannerState.connected => Icons.cloud_done_rounded,
+    _BannerState.backOnline => Icons.wifi_rounded,
+    _BannerState.offline || _BannerState.hidden => Icons.cloud_off_rounded,
+  };
+
+  String _message(BuildContext context) => switch (state) {
+    _BannerState.connected => context.l10n.connectedToServer,
+    _BannerState.backOnline => context.l10n.backOnline,
+    _BannerState.offline || _BannerState.hidden => context.l10n.offlineBanner,
+  };
 }

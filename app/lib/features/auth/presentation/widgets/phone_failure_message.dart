@@ -42,22 +42,28 @@ class PhoneFailureMessage extends ConsumerWidget {
             ),
           ),
           if (switchTo != null && linkLabel != null)
-            TextButton(
-              onPressed: () {
-                ref
-                    .read(registrationDraftProvider.notifier)
-                    .switchMode(switchTo);
-                ref.read(phoneSubmitProvider.notifier).clearFailure();
-              },
-              child: Text(
-                linkLabel,
-                style: context.text.bodySmall
-                    ?.withWeight(FontWeight.w700)
-                    .copyWith(color: context.appColors.link),
-              ),
-            ),
+            _switchLink(context, ref, switchTo, linkLabel),
         ],
       ),
     );
   }
+
+  /// "Register" / "Log in": switches the flow and clears the message.
+  Widget _switchLink(
+    BuildContext context,
+    WidgetRef ref,
+    AuthMode switchTo,
+    String label,
+  ) => TextButton(
+    onPressed: () {
+      ref.read(registrationDraftProvider.notifier).switchMode(switchTo);
+      ref.read(phoneSubmitProvider.notifier).clearFailure();
+    },
+    child: Text(
+      label,
+      style: context.text.bodySmall
+          ?.withWeight(FontWeight.w700)
+          .copyWith(color: context.appColors.link),
+    ),
+  );
 }

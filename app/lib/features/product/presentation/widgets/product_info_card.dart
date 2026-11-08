@@ -22,6 +22,12 @@ class ProductInfoCard extends StatelessWidget {
 
   static const double _imageAspect = 1.15;
   static const double _overlayHalfHeight = 28;
+  static const EdgeInsets _padding = EdgeInsets.fromLTRB(
+    AppSpacing.s5,
+    AppSpacing.s5,
+    AppSpacing.s5,
+    AppSpacing.s10,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -36,39 +42,33 @@ class ProductInfoCard extends StatelessWidget {
               color: context.colors.surface,
               borderRadius: BorderRadius.circular(AppRadii.sheet),
             ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.s5,
-                AppSpacing.s5,
-                AppSpacing.s5,
-                AppSpacing.s10,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _titleRow(context),
-                  const SizedBox(height: AppSpacing.s4),
-                  AspectRatio(
-                    aspectRatio: _imageAspect,
-                    child: Hero(
-                      tag: productHeroTag(product.id, scope: heroScope),
-                      child: AppImage(
-                        assetPath: product.assetPath,
-                        imageUrl: product.imageUrl,
-                        fit: BoxFit.contain,
-                        semanticLabel: product.name,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            child: Padding(padding: _padding, child: _content(context)),
           ),
         ),
         bottomOverlay,
       ],
     );
   }
+
+  Widget _content(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      _titleRow(context),
+      const SizedBox(height: AppSpacing.s4),
+      AspectRatio(
+        aspectRatio: _imageAspect,
+        child: Hero(
+          tag: productHeroTag(product.id, scope: heroScope),
+          child: AppImage(
+            assetPath: product.assetPath,
+            imageUrl: product.imageUrl,
+            fit: BoxFit.contain,
+            semanticLabel: product.name,
+          ),
+        ),
+      ),
+    ],
+  );
 
   Widget _titleRow(BuildContext context) {
     final locale = Localizations.localeOf(context).toString();

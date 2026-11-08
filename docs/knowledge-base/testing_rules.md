@@ -19,3 +19,4 @@
 - Drift: in-memory `NativeDatabase.memory()` for repo tests.
 - No golden tests unless time allows.
 - Run `flutter analyze && flutter test` before every commit.
+- Screens: one overflow test with real fonts across small phone / large text / Burmese (see `rewards_page_layout_test.dart`).

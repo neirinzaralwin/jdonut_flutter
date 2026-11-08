@@ -17,6 +17,7 @@ part 'app_database.g.dart';
     SectionProducts,
     Shops,
     Members,
+    Challenges,
     AppMeta,
   ],
 )
@@ -27,7 +28,7 @@ class AppDatabase extends _$AppDatabase {
   static const String _databaseName = 'jdonut';
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -42,16 +43,28 @@ class AppDatabase extends _$AppDatabase {
           sectionProducts,
           shops,
           members,
+          challenges,
           appMeta,
         ];
         for (final table in newTables) {
           await migrator.createTable(table);
         }
       }
-      // v3: shop photos. Tables created just above already have them.
-      if (from == 2) {
+      // Tables created just above (from < 2) already have every later
+      // column, so the steps below only run for databases that existed.
+      // v3: shop photos.
+      if (from >= 2 && from < 3) {
         await migrator.addColumn(shops, shops.imageUrl);
         await migrator.addColumn(shops, shops.assetPath);
+      }
+      // v4: Rewards challenges; one "points to next tier" for every screen.
+      if (from >= 2 && from < 4) {
+        await migrator.renameColumn(
+          members,
+          'amount_to_next_tier_mmk',
+          members.pointsToNextTier,
+        );
+        await migrator.createTable(challenges);
       }
     },
     beforeOpen: (details) => customStatement('PRAGMA foreign_keys = ON'),

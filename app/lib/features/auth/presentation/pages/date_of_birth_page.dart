@@ -1,6 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:jdonut/core/constants/app_constants.dart';
 import 'package:jdonut/core/l10n/l10n.dart';
 import 'package:jdonut/core/theme/theme.dart';
@@ -13,7 +16,6 @@ import 'package:jdonut/features/auth/presentation/providers/auth_dependencies.da
 import 'package:jdonut/features/auth/presentation/providers/register_notifier.dart';
 import 'package:jdonut/features/auth/presentation/providers/registration_draft.dart';
 import 'package:jdonut/features/auth/presentation/widgets/auth_step_scaffold.dart';
-import 'package:jdonut/features/auth/presentation/widgets/month_field.dart';
 
 class DateOfBirthPage extends ConsumerStatefulWidget {
   const DateOfBirthPage({super.key});
@@ -23,35 +25,58 @@ class DateOfBirthPage extends ConsumerStatefulWidget {
 }
 
 class _DateOfBirthPageState extends ConsumerState<DateOfBirthPage> {
-  static const int _dayDigits = 2;
-  static const int _yearDigits = 4;
-
-  late final RegistrationDraftState _draft = ref.read(
-    registrationDraftProvider,
-  );
-  late final TextEditingController _day = TextEditingController(
-    text: _draft.birthDay,
-  );
-  late final TextEditingController _year = TextEditingController(
-    text: _draft.birthYear,
-  );
+  late DateTime _pickedDate;
+  final TextEditingController _birthdayController = TextEditingController();
 
   @override
   void dispose() {
-    _day.dispose();
-    _year.dispose();
+    _birthdayController.dispose();
     super.dispose();
   }
 
-  void _update({int? month}) {
-    ref
-        .read(registrationDraftProvider.notifier)
-        .updateBirthDate(month: month, day: _day.text, year: _year.text);
-    setState(() {});
+  @override
+  void initState() {
+    super.initState();
+    final draft = ref.read(registrationDraftProvider);
+    final today = ref.read(clockProvider)();
+    _pickedDate = _draftDate(draft) ?? _defaultDate(today);
   }
 
-  @override
-  Widget build(BuildContext context) {
+  DateTime? _draftDate(RegistrationDraftState draft) {
+    final month = draft.birthMonth;
+    final day = int.tryParse(draft.birthDay);
+    final year = int.tryParse(draft.birthYear);
+    if (month == null || day == null || year == null) return null;
+    try {
+      final date = DateTime(year, month, day);
+      if (date.year != year || date.month != month || date.day != day) {
+        return null;
+      }
+      return date;
+    } on Exception {
+      return null;
+    }
+  }
+
+  DateTime _defaultDate(DateTime today) => DateTime(
+    today.year - AppConstants.minimumAgeYears,
+    today.month,
+    today.day,
+  );
+
+  void _setDate(DateTime date) {
+    setState(() => _pickedDate = date);
+    ref
+        .read(registrationDraftProvider.notifier)
+        .updateBirthDate(
+          month: date.month,
+          day: date.day.toString(),
+          year: date.year.toString(),
+        );
+  }
+
+  /// A failed fake register call shows a snackbar.
+  void _listenForFailure() {
     ref.listen(registerSubmitProvider.select((state) => state.failure), (
       _,
       failure,
@@ -61,14 +86,30 @@ class _DateOfBirthPageState extends ConsumerState<DateOfBirthPage> {
         context,
       ).showSnackBar(SnackBar(content: Text(context.l10n.errorGeneric)));
     });
-    final month = ref.watch(
-      registrationDraftProvider.select((draft) => draft.birthMonth),
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _listenForFailure();
+    final draft = ref.watch(registrationDraftProvider);
+    final error = validateDateOfBirth(
+      year: draft.birthYear.isEmpty ? null : int.tryParse(draft.birthYear),
+      month: draft.birthMonth,
+      day: draft.birthDay.isEmpty ? null : int.tryParse(draft.birthDay),
+      today: ref.read(clockProvider)(),
     );
-    final error = _error(month);
     final isComplete =
-        month != null &&
-        _day.text.isNotEmpty &&
-        _year.text.length == _yearDigits;
+        draft.birthMonth != null &&
+        draft.birthDay.isNotEmpty &&
+        draft.birthYear.length == 4;
+    final birthdayText = isComplete
+        ? DateFormat.yMMMMd(
+            Localizations.localeOf(context).toString(),
+          ).format(_pickedDate)
+        : '';
+    if (_birthdayController.text != birthdayText) {
+      _birthdayController.text = birthdayText;
+    }
     final submit = ref.watch(registerSubmitProvider);
     return AuthStepScaffold(
       title: context.l10n.dobTitle,
@@ -81,18 +122,18 @@ class _DateOfBirthPageState extends ConsumerState<DateOfBirthPage> {
         AuthMode.register,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          MonthField(
-            month: month,
-            onSelected: (value) => _update(month: value),
-          ),
-          const SizedBox(height: AppSpacing.s4),
-          _numberField(_day, context.l10n.dayHint, _dayDigits),
-          const SizedBox(height: AppSpacing.s4),
-          _numberField(
-            _year,
-            context.l10n.yearHint,
-            _yearDigits,
+          AppTextField(
+            key: const ValueKey('birthday-picker-field'),
+            controller: _birthdayController,
+            hintText: context.l10n.selectBirthday,
+            readOnly: true,
+            onTap: _openPicker,
+            suffixIcon: Icon(
+              Icons.calendar_month_outlined,
+              color: context.colors.onSurfaceVariant,
+            ),
             errorText: isComplete ? _message(error) : null,
           ),
         ],
@@ -107,30 +148,102 @@ class _DateOfBirthPageState extends ConsumerState<DateOfBirthPage> {
     );
   }
 
-  Widget _numberField(
-    TextEditingController controller,
-    String hint,
-    int digits, {
-    String? errorText,
-  }) => AppTextField(
-    controller: controller,
-    hintText: hint,
-    keyboardType: TextInputType.number,
-    textInputAction: TextInputAction.next,
-    inputFormatters: [
-      FilteringTextInputFormatter.digitsOnly,
-      LengthLimitingTextInputFormatter(digits),
-    ],
-    errorText: errorText,
-    onChanged: (_) => _update(),
-  );
+  Future<void> _openPicker() async {
+    if (Platform.isIOS) {
+      await _showCupertinoPicker();
+    } else {
+      await _showMaterialPicker();
+    }
+  }
 
-  DateOfBirthError? _error(int? month) => validateDateOfBirth(
-    year: int.tryParse(_year.text),
-    month: month,
-    day: int.tryParse(_day.text),
-    today: ref.read(clockProvider)(),
-  );
+  Future<void> _showMaterialPicker() async {
+    final today = ref.read(clockProvider)();
+    final selected = await showDatePicker(
+      context: context,
+      initialDate: _pickedDate.isAfter(today) ? today : _pickedDate,
+      firstDate: DateTime(1900),
+      lastDate: today,
+      helpText: context.l10n.selectBirthday,
+    );
+    if (selected != null) _setDate(selected);
+  }
+
+  Future<void> _showCupertinoPicker() async {
+    final today = ref.read(clockProvider)();
+    var selected = _pickedDate.isAfter(today) ? today : _pickedDate;
+    final result = await showModalBottomSheet<DateTime>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: context.colors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(AppRadii.sheet),
+        ),
+      ),
+      builder: (sheetContext) => SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 390,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.s5,
+                  AppSpacing.s4,
+                  AppSpacing.s3,
+                  AppSpacing.s2,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        context.l10n.selectBirthday,
+                        style: context.text.titleLarge?.copyWith(
+                          color: context.colors.primary,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: MaterialLocalizations.of(
+                        context,
+                      ).closeButtonTooltip,
+                      onPressed: () => Navigator.of(sheetContext).pop(),
+                      icon: const Icon(Icons.close),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: selected,
+                  maximumDate: today,
+                  minimumDate: DateTime(1900),
+                  onDateTimeChanged: (date) => selected = date,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.s5,
+                  AppSpacing.s2,
+                  AppSpacing.s5,
+                  AppSpacing.s4,
+                ),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: () => Navigator.of(sheetContext).pop(selected),
+                    child: Text(context.l10n.select),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (result != null) _setDate(result);
+  }
 
   String? _message(DateOfBirthError? error) => switch (error) {
     null => null,

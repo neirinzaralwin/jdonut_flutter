@@ -24,6 +24,7 @@ abstract final class AppRadii {
 
 abstract final class AppOpacity {
   static const double disabled = 0.5;
+  static const double shadow = 0.35;
 }
 
 abstract final class AppSizes {

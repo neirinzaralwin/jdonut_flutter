@@ -28,6 +28,15 @@ All responses are wrapped:
 
 Member profile, challenges and users are **not** served (local-only per brief).
 
+## Incoming products (server-only)
+`data/incoming.json` holds products the app's seed never has (Lavender Sugar Donut, Chocolate Trio Box), with photos in `public/images/products/`. They demo new data arriving when the app comes back online.
+```bash
+npm run incoming:add      # server stopped; adds them to db.json (first in Seasonal / Donut boxes)
+npm start                 # app syncs them in
+npm run incoming:remove   # back to the seeded catalog
+```
+Running `add` twice doesn't duplicate. `sync-seed` filters them out, so they never end up in the app bundle.
+
 ## Dev toggles (env vars)
 - `LATENCY_MS=800` — add delay to see skeletons.
 - `FAIL_RATE=0.3` — random 503s to exercise retry + error states.

@@ -22,6 +22,18 @@ class _DonutPainter extends CustomPainter {
 
   final Color icing;
 
+  /// Shares of the radius: the shadow drops a little below the dough, and
+  /// sprinkles alternate between two rings on the icing.
+  static const double _shadowDrop = 0.04;
+  static const double _doughRatio = 0.96;
+  static const double _sprinkleWidth = 0.06;
+  static const double _sprinkleLength = 0.1;
+  static const double _innerSprinkleRing = 0.5;
+  static const double _outerSprinkleRing = 0.68;
+
+  /// Each sprinkle leans 60° off the radius.
+  static const double _sprinkleTilt = math.pi / 3;
+
   static const double _holeRatio = 0.18;
   static const double _icingRatio = 0.42;
   static const int _sprinkleCount = 14;
@@ -38,30 +50,36 @@ class _DonutPainter extends CustomPainter {
     final radius = size.shortestSide / 2;
     canvas
       ..drawCircle(
-        center + Offset(0, radius * 0.04),
+        center + Offset(0, radius * _shadowDrop),
         radius,
         Paint()..color = AppPalette.doughShadow,
       )
-      ..drawCircle(center, radius * 0.96, Paint()..color = AppPalette.dough)
+      ..drawCircle(
+        center,
+        radius * _doughRatio,
+        Paint()..color = AppPalette.dough,
+      )
       ..drawCircle(center, radius * _icingRatio * 2, Paint()..color = icing);
     _drawSprinkles(canvas, center, radius);
     canvas.drawCircle(
       center,
-      radius * _holeRatio * 2 * 0.5,
+      radius * _holeRatio,
       Paint()..color = AppPalette.doughShadow,
     );
   }
 
   void _drawSprinkles(Canvas canvas, Offset center, double radius) {
     final paint = Paint()
-      ..strokeWidth = radius * 0.06
+      ..strokeWidth = radius * _sprinkleWidth
       ..strokeCap = StrokeCap.round;
     for (var i = 0; i < _sprinkleCount; i++) {
       final angle = i * math.pi * 2 / _sprinkleCount;
-      final distance = radius * (i.isEven ? 0.5 : 0.68);
+      final distance =
+          radius * (i.isEven ? _innerSprinkleRing : _outerSprinkleRing);
       final start = center + Offset.fromDirection(angle, distance);
       final end =
-          start + Offset.fromDirection(angle + math.pi / 3, radius * 0.1);
+          start +
+          Offset.fromDirection(angle + _sprinkleTilt, radius * _sprinkleLength);
       canvas.drawLine(
         start,
         end,

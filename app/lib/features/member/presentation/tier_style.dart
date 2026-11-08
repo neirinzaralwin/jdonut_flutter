@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:jdonut/core/l10n/l10n.dart';
 import 'package:jdonut/core/theme/theme.dart';
-import 'package:jdonut/features/member/member.dart';
+import 'package:jdonut/features/member/domain/entities/member.dart';
 
 String tierLabel(BuildContext context, MemberTier tier) => switch (tier) {
   MemberTier.bronze => context.l10n.tierBronze,

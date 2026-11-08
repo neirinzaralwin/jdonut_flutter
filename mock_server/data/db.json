@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updatedAt": "2026-11-08T00:00:00.000Z"
+    "updatedAt": "2026-11-08T15:30:56.830Z"
   },
   "products": [
     {
@@ -145,6 +145,28 @@
       "imageUrl": "/static/images/products/p_classic_dozen.jpg",
       "assetPath": "assets/images/products/p_classic_dozen.jpg",
       "description": "Twelve classic donuts, mixed glazes and sprinkles."
+    },
+    {
+      "id": "p_lavender_sugar",
+      "code": "JD022140",
+      "name": "Lavender Sugar Donut",
+      "priceMmk": 3400,
+      "isNew": true,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_lavender_sugar.jpg",
+      "assetPath": null,
+      "description": "A soft ring rolled in lavender sugar with a half coat of violet sprinkles. Lightly floral, not too sweet."
+    },
+    {
+      "id": "p_box_choco_trio",
+      "code": "JD022141",
+      "name": "Chocolate Trio Box",
+      "priceMmk": 9600,
+      "isNew": true,
+      "discountPercent": 10,
+      "imageUrl": "/static/images/products/p_box_choco_trio.jpg",
+      "assetPath": null,
+      "description": "Three chocolate favourites in one box: s'mores with toasted marshmallow, a white-glazed chocolate drizzle, and a coffee glaze with raspberry crumbs."
     }
   ],
   "banners": [
@@ -192,6 +214,7 @@
       "layout": "featured",
       "order": 1,
       "productIds": [
+        "p_lavender_sugar",
         "p_strawberry_ring",
         "p_matcha_ring",
         "p_coconut",
@@ -228,6 +251,7 @@
       "layout": "standard",
       "order": 4,
       "productIds": [
+        "p_box_choco_trio",
         "p_box_six",
         "p_classic_dozen"
       ]

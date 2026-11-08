@@ -63,7 +63,7 @@ MembersCompanion memberFromJson(Json json) => MembersCompanion.insert(
   nextTier: Value(json['nextTier'] as String?),
   points: _int(json, 'points'),
   tierProgress: (json['tierProgress'] as num).toDouble(),
-  amountToNextTierMmk: _int(json, 'amountToNextTierMmk'),
+  pointsToNextTier: _int(json, 'pointsToNextTier'),
   notificationCount: _int(json, 'notificationCount'),
   rewardsCount: _int(json, 'rewardsCount'),
   photoAssetPath: Value(json['photoAssetPath'] as String?),
@@ -78,3 +78,14 @@ int _int(Json json, String key) => switch (json[key]) {
   final int value => value,
   _ => throw FormatException('Missing int "$key"', json),
 };
+
+ChallengesCompanion challengeFromJson(Json json) => ChallengesCompanion.insert(
+  id: _string(json, 'id'),
+  tab: _string(json, 'tab'),
+  title: _string(json, 'title'),
+  artwork: _string(json, 'artwork'),
+  progress: _int(json, 'progress'),
+  goal: _int(json, 'goal'),
+  rewardPoints: _int(json, 'rewardPoints'),
+  sortOrder: _int(json, 'order'),
+);

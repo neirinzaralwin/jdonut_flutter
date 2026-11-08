@@ -83,6 +83,8 @@
   },
   "nameInvalidCharacters": "Use letters and spaces only.",
   "dobTitle": "What's your date of birth?",
+  "selectBirthday": "Select your birthday",
+  "select": "Select",
   "monthHint": "Month",
   "dayHint": "Day",
   "yearHint": "Year",
@@ -126,17 +128,6 @@
   "tierSilver": "Silver",
   "tierGold": "Gold",
   "tierPlatinum": "Platinum",
-  "amountToNextTier": "{amount} kyats left to become {tier}",
-  "@amountToNextTier": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      },
-      "tier": {
-        "type": "String"
-      }
-    }
-  },
   "notifications": "Notifications",
   "seeAll": "See all",
   "shopsNearYou": "{count, plural, =1{There is 1 J'Donut shop near you 😋} other{There are {count} J'Donut shops near you 😋}}",
@@ -185,5 +176,69 @@
   "offlineBanner": "You're offline · showing saved data",
   "refreshFailed": "Couldn't refresh. Showing saved data.",
   "backOnline": "You're back online",
-  "connectedToServer": "Connected to server"
+  "connectedToServer": "Connected to server",
+  "pointsToNextTier": "{points} points left to become {tier}",
+  "@pointsToNextTier": {
+    "placeholders": {
+      "points": {
+        "type": "String"
+      },
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "rewardsTitle": "J' Donuts Rewards",
+  "rewardsPill": "Rewards",
+  "totalPoints": "Total points",
+  "tierHereNow": "You're here now",
+  "tierPointsRemaining": "{points} pts remaining to become {tier}",
+  "@tierPointsRemaining": {
+    "placeholders": {
+      "points": {
+        "type": "String"
+      },
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "tierSoon": "You'll be here soon",
+  "tierUnlocked": "Unlocked",
+  "tabEatMore": "Eat more earn more",
+  "tabGift": "Gift",
+  "earn": "Earn",
+  "pointsShort": "{points} pts",
+  "@pointsShort": {
+    "placeholders": {
+      "points": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeProgress": "{progress}/{goal}",
+  "@challengeProgress": {
+    "placeholders": {
+      "progress": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "challengesEmpty": "No challenges here yet.",
+  "challengesError": "Couldn't load challenges.",
+  "rewardsCountLabel": "{count} rewards",
+  "@rewardsCountLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "earned": "Earned",
+  "pointsGained": "+{points} pts",
+  "@pointsGained": {"placeholders": {"points": {"type": "String"}}},
+  "shopsEmpty": "No J'Donut shops near you yet."
 }

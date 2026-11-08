@@ -9,6 +9,9 @@ class WhatsThis extends StatelessWidget {
   final String description;
 
   static const double _labelWidth = 72;
+
+  /// The "?" fills this much of its green circle.
+  static const double _glyphRatio = 0.7;
   static const double _iconSize = 20;
   static const double _dividerWidth = 1;
 
@@ -17,29 +20,7 @@ class WhatsThis extends StatelessWidget {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(
-          width: _labelWidth,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: _iconSize,
-                height: _iconSize,
-                decoration: BoxDecoration(
-                  color: context.appColors.success,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.question_mark_rounded,
-                  size: _iconSize * 0.7,
-                  color: context.colors.onPrimary,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.s1),
-              Text(context.l10n.whatsThis, style: context.text.titleSmall),
-            ],
-          ),
-        ),
+        SizedBox(width: _labelWidth, child: _label(context)),
         VerticalDivider(
           width: AppSpacing.s6,
           thickness: _dividerWidth,
@@ -55,5 +36,26 @@ class WhatsThis extends StatelessWidget {
         ),
       ],
     ),
+  );
+
+  Widget _label(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        width: _iconSize,
+        height: _iconSize,
+        decoration: BoxDecoration(
+          color: context.appColors.success,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Icons.question_mark_rounded,
+          size: _iconSize * _glyphRatio,
+          color: context.colors.onPrimary,
+        ),
+      ),
+      const SizedBox(height: AppSpacing.s1),
+      Text(context.l10n.whatsThis, style: context.text.titleSmall),
+    ],
   );
 }

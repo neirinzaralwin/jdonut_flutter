@@ -7,17 +7,25 @@ mixin EntranceControllerMixin<T extends StatefulWidget>
     on State<T>, SingleTickerProviderStateMixin<T> {
   late final AnimationController entrance = AnimationController(
     vsync: this,
-    duration: AppDurations.entrance,
+    duration: entranceDuration,
   );
+
+  /// Override for a longer or shorter entrance.
+  Duration get entranceDuration => AppDurations.entrance;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (entrance.isAnimating || entrance.isCompleted) return;
+    replayEntrance();
+  }
+
+  /// Plays the entrance from the start (e.g. when a tab becomes visible).
+  void replayEntrance() {
     if (context.reduceMotion) {
       entrance.value = 1;
     } else {
-      entrance.forward();
+      entrance.forward(from: 0);
     }
   }
 

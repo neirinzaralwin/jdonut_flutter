@@ -24,6 +24,22 @@ void main() {
     expect(await database.select(database.members).get(), hasLength(1));
   });
 
+  test(
+    'SKIP_SEED: member only, empty catalog; a normal run seeds it later',
+    () async {
+      await seed.seedIfNeeded(withCatalog: false);
+
+      expect(await database.select(database.products).get(), isEmpty);
+      expect(await database.select(database.shops).get(), isEmpty);
+      expect(await database.select(database.members).get(), hasLength(1));
+      expect(await database.select(database.challenges).get(), isNotEmpty);
+
+      await seed.seedIfNeeded();
+
+      expect(await database.select(database.products).get(), isNotEmpty);
+    },
+  );
+
   test('seeding again does not duplicate or wipe data', () async {
     await seed.seedIfNeeded();
     final count = (await database.select(database.products).get()).length;

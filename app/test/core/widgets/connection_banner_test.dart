@@ -27,7 +27,14 @@ class _FakeApi implements ApiClient {
     String path,
     T Function(Object data) parse, {
     Duration? timeout,
-  }) async => next as Result<T>;
+    bool retry = true,
+  }) async {
+    lastRetry = retry;
+    return next as Result<T>;
+  }
+
+  /// The health probe must not retry (one try = the answer).
+  bool? lastRetry;
 }
 
 void main() {
@@ -93,6 +100,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(opacity(tester), 0);
+    expect(api.lastRetry, isFalse, reason: 'the health probe tries once');
   });
 
   testWidgets('shows the offline message and keeps it while offline', (

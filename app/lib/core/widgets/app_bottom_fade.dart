@@ -44,6 +44,11 @@ class AppBottomFade extends StatelessWidget {
     return maxSigma * progress * progress;
   }
 
+  /// The colour wash on top of the blur: clear at the top, mostly opaque at
+  /// the bottom edge.
+  static const List<double> _tintStops = [0, 0.35, 0.7, 1];
+  static const List<double> _tintAlphas = [0, 0.18, 0.5, 0.78];
+
   @override
   Widget build(BuildContext context) {
     final total = height + MediaQuery.paddingOf(context).bottom;
@@ -61,30 +66,17 @@ class AppBottomFade extends StatelessWidget {
                   right: 0,
                   top: bandHeight * band,
                   bottom: 0,
-                  child: ClipRect(
-                    child: BackdropFilter(
-                      // Mirror tiling keeps the clipped edge from sampling a
-                      // hard border.
-                      filter: ui.ImageFilter.blur(
-                        sigmaX: _sigma(band),
-                        sigmaY: _sigma(band),
-                        tileMode: TileMode.mirror,
-                      ),
-                      child: const SizedBox.expand(),
-                    ),
-                  ),
+                  child: _blur(band),
                 ),
               DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    stops: const [0, 0.35, 0.7, 1],
+                    stops: _tintStops,
                     colors: [
-                      color.withValues(alpha: 0),
-                      color.withValues(alpha: 0.18),
-                      color.withValues(alpha: 0.5),
-                      color.withValues(alpha: 0.78),
+                      for (final alpha in _tintAlphas)
+                        color.withValues(alpha: alpha),
                     ],
                   ),
                 ),
@@ -95,4 +87,16 @@ class AppBottomFade extends StatelessWidget {
       ),
     );
   }
+
+  /// Mirror tiling keeps the clipped edge from sampling a hard border.
+  Widget _blur(int band) => ClipRect(
+    child: BackdropFilter(
+      filter: ui.ImageFilter.blur(
+        sigmaX: _sigma(band),
+        sigmaY: _sigma(band),
+        tileMode: TileMode.mirror,
+      ),
+      child: const SizedBox.expand(),
+    ),
+  );
 }

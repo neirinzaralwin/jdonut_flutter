@@ -107,3 +107,9 @@ Text must survive 1.3× text scale: no fixed-height text containers; use `maxLin
 | Points ring | `CustomPainter`, pink gradient sweep over `ringTrack`, sprinkle decoration optional |
 
 Light theme only (designs have no dark mode) — documented as a known gap.
+
+## Layout must survive any text size (no overflow)
+
+- Never put text inside a fixed `height`. Fix only the size of art (icons, rings, images); let rows and columns size to their text.
+- Wrap or shrink, never clip silently: `maxLines` + `ellipsis` only where the design truly truncates.
+- Every new screen gets a layout test like `test/features/rewards/rewards_page_layout_test.dart`: real fonts, 320 px phone, text scale 1.6, Burmese. It fails on any overflow.

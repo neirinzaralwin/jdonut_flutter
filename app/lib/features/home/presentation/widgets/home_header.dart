@@ -5,7 +5,6 @@ import 'package:jdonut/core/l10n/l10n.dart';
 import 'package:jdonut/core/theme/theme.dart';
 import 'package:jdonut/core/utils/formatters.dart';
 import 'package:jdonut/core/widgets/app_image.dart';
-import 'package:jdonut/features/home/presentation/widgets/tier_label.dart';
 import 'package:jdonut/features/member/member.dart';
 
 /// Avatar, name, tier and "kyats left" chip on the sky header.
@@ -129,8 +128,8 @@ class _NextTierChip extends StatelessWidget {
           vertical: AppSpacing.s2,
         ),
         child: Text(
-          context.l10n.amountToNextTier(
-            formatNumber(member.amountToNextTierMmk, locale),
+          context.l10n.pointsToNextTier(
+            formatNumber(member.pointsToNextTier, locale),
             tierLabel(context, member.nextTier!),
           ),
           style: context.text.bodySmall,

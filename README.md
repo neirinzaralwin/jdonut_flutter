@@ -40,8 +40,19 @@ _TBD_
 ## Animations
 _TBD_
 
+## Tests
+```bash
+cd app
+flutter test                                   # unit + widget + layout (no device needed)
+flutter test integration_test -d <device-id>   # Register → Home → Product detail → Rewards, on a simulator/emulator
+```
+- `test/app_layout_test.dart` walks every screen of the main flow on a 4.7" and a 6.9" phone at text scale 1.3 with the real fonts; any overflow fails it.
+- `integration_test/app_flow_test.dart` runs the real app on a fresh in-memory database, so each run starts as a new user.
+
 ## Known gaps
-_TBD_
+Deliberate choices that differ from the brief:
+- **Earn does something (demo).** The brief asks for press feedback only. Tapping a complete challenge's Earn flies "+100 pts" into the ring and the total counts up. It is kept in memory only (no earn endpoint in the brief), so it resets on restart.
+- **Quantity starts at 0 on Product detail.** The design hides Add to cart until the first +, so the stepper starts at 0 instead of the brief's minimum of 1. From 1 upwards it behaves as specified (live total = quantity × price).
 
 ## Time spent
 _TBD_

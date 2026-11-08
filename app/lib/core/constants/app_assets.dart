@@ -8,5 +8,12 @@ abstract final class AppAssets {
   static const String homeBackground = 'assets/images/home/home_background.png';
   static const String shopsBackground =
       'assets/images/shops/shops_section_background.jpg';
+  static const String tierSilver = 'assets/images/rewards/silver.png';
+  static const String tierGold = 'assets/images/rewards/gold.png';
+  static const String tierPlatinum = 'assets/images/rewards/platinum.png';
+  static const String donutProgress =
+      'assets/images/rewards/donus-progress-indicator.png';
+  static const String drinkProgress =
+      'assets/images/rewards/drink-progress-indicator.png';
   static const String donutLoading = 'assets/images/branding/donut_loading.png';
 }

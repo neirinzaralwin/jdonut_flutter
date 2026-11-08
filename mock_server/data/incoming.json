@@ -1,0 +1,31 @@
+{
+  "_comment": "Products that exist only on the server, never in the app's bundled seed. Add with `npm run incoming:add` while the server is stopped, then start it: the app syncs them in (offline -> back online). Remove with `npm run incoming:remove`.",
+  "products": [
+    {
+      "id": "p_lavender_sugar",
+      "code": "JD022140",
+      "name": "Lavender Sugar Donut",
+      "priceMmk": 3400,
+      "isNew": true,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_lavender_sugar.jpg",
+      "assetPath": null,
+      "description": "A soft ring rolled in lavender sugar with a half coat of violet sprinkles. Lightly floral, not too sweet."
+    },
+    {
+      "id": "p_box_choco_trio",
+      "code": "JD022141",
+      "name": "Chocolate Trio Box",
+      "priceMmk": 9600,
+      "isNew": true,
+      "discountPercent": 10,
+      "imageUrl": "/static/images/products/p_box_choco_trio.jpg",
+      "assetPath": null,
+      "description": "Three chocolate favourites in one box: s'mores with toasted marshmallow, a white-glazed chocolate drizzle, and a coffee glaze with raspberry crumbs."
+    }
+  ],
+  "placements": {
+    "seasonal": "p_lavender_sugar",
+    "boxes": "p_box_choco_trio"
+  }
+}

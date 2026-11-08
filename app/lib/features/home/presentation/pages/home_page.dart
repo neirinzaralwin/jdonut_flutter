@@ -110,35 +110,18 @@ class _HeaderWithCarousel extends ConsumerWidget {
     final carouselHeight = BannerCarousel.heightFor(
       MediaQuery.sizeOf(context).width,
     );
-    final banners = ref.watch(homeBannersProvider);
     return Stack(
       children: [
         Positioned.fill(
           bottom: carouselHeight * (1 - _headerOverlap) + _carouselBottomGap,
-          child: ColoredBox(
-            color: context.appColors.homeHeader,
-            child: Image.asset(
-              AppAssets.homeBackground,
-              fit: BoxFit.cover,
-              // Keeps the hexagon on the right as the height changes.
-              alignment: Alignment.centerRight,
-              excludeFromSemantics: true,
-            ),
-          ),
+          child: _background(context),
         ),
         SafeArea(
           bottom: false,
           child: Column(
             children: [
               HomeHeader(name: name, member: ref.watch(memberProvider).value),
-              switch (banners) {
-                AsyncData(:final value) when value.isNotEmpty => BannerCarousel(
-                  banners: value,
-                ),
-                AsyncData() => const SizedBox.shrink(),
-                AsyncError() => const SectionError(),
-                AsyncLoading() => const CarouselSkeleton(),
-              },
+              _banners(ref),
               const SizedBox(height: _carouselBottomGap),
             ],
           ),
@@ -146,6 +129,27 @@ class _HeaderWithCarousel extends ConsumerWidget {
       ],
     );
   }
+
+  Widget _background(BuildContext context) => ColoredBox(
+    color: context.appColors.homeHeader,
+    child: Image.asset(
+      AppAssets.homeBackground,
+      fit: BoxFit.cover,
+      // Keeps the hexagon on the right as the height changes.
+      alignment: Alignment.centerRight,
+      excludeFromSemantics: true,
+    ),
+  );
+
+  /// No banners: the carousel simply isn't shown (the header still fits).
+  Widget _banners(WidgetRef ref) => switch (ref.watch(homeBannersProvider)) {
+    AsyncData(:final value) when value.isNotEmpty => BannerCarousel(
+      banners: value,
+    ),
+    AsyncData() => const SizedBox.shrink(),
+    AsyncError() => const SectionError(),
+    AsyncLoading() => const CarouselSkeleton(),
+  };
 }
 
 class _SectionsSliver extends ConsumerWidget {
@@ -194,7 +198,9 @@ class _ShopsBlock extends ConsumerWidget {
     // without it, plain space keeps the last section clear of the nav.
     final navSpace = AppBottomNav.overlapHeight(context);
     final content = switch (ref.watch(nearbyShopsProvider)) {
-      AsyncData(:final value) when value.isEmpty => null,
+      AsyncData(:final value) when value.isEmpty => SectionEmpty(
+        message: context.l10n.shopsEmpty,
+      ),
       AsyncData(:final value) => NearbyShopsSection(
         shops: value,
         bottomInset: navSpace,
@@ -208,7 +214,7 @@ class _ShopsBlock extends ConsumerWidget {
           ? content
           : Column(
               children: [
-                ?content,
+                content,
                 SizedBox(height: navSpace),
               ],
             ),

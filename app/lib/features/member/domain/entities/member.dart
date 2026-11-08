@@ -20,7 +20,7 @@ abstract class Member with _$Member {
     required MemberTier tier,
     required int points,
     required double tierProgress,
-    required int amountToNextTierMmk,
+    required int pointsToNextTier,
     required int notificationCount,
     required int rewardsCount,
     MemberTier? nextTier,

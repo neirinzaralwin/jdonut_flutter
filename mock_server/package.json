@@ -8,7 +8,11 @@
     "start": "node server.js",
     "dev": "LATENCY_MS=800 node server.js",
     "flaky": "FAIL_RATE=0.3 node server.js",
-    "sync-seed": "node scripts/sync-seed.js"
+    "sync-seed": "node scripts/sync-seed.js",
+    "incoming:add": "node scripts/incoming.js add",
+    "incoming:remove": "node scripts/incoming.js remove"
   },
-  "dependencies": { "json-server": "0.17.4" }
+  "dependencies": {
+    "json-server": "0.17.4"
+  }
 }

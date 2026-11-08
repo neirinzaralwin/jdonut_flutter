@@ -147,17 +147,7 @@ class _ShopCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AspectRatio(
-            aspectRatio: _imageAspect,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadii.card),
-              child: AppImage(
-                assetPath: shop.assetPath,
-                imageUrl: shop.imageUrl,
-                semanticLabel: shop.name,
-              ),
-            ),
-          ),
+          _photo(),
           const SizedBox(height: AppSpacing.s3),
           Text(
             shop.name,
@@ -177,6 +167,18 @@ class _ShopCard extends StatelessWidget {
           const Spacer(),
           _OrderOnline(label: context.l10n.orderOnline),
         ],
+      ),
+    ),
+  );
+
+  Widget _photo() => AspectRatio(
+    aspectRatio: _imageAspect,
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(AppRadii.card),
+      child: AppImage(
+        assetPath: shop.assetPath,
+        imageUrl: shop.imageUrl,
+        semanticLabel: shop.name,
       ),
     ),
   );

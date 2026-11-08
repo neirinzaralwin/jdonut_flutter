@@ -15,4 +15,10 @@ abstract final class Env {
   }
 
   static const String apiVersionPath = '/v1';
+
+  /// Debug only: start without the bundled catalog (products, banners,
+  /// sections, shops), to see the empty states or data that comes only from
+  /// the mock server. The member and challenges are still loaded.
+  /// `flutter run --dart-define=SKIP_SEED=true`
+  static const bool skipCatalogSeed = bool.fromEnvironment('SKIP_SEED');
 }

@@ -95,3 +95,18 @@ class SectionError extends StatelessWidget {
     ),
   );
 }
+
+/// Inline per-section empty state.
+class SectionEmpty extends StatelessWidget {
+  const SectionEmpty({required this.message, super.key});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.symmetric(
+      horizontal: AppSpacing.screenHorizontal,
+    ),
+    child: Text(message, style: context.text.bodyMedium),
+  );
+}

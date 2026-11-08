@@ -20,7 +20,7 @@ extension on MemberRow {
     nextTier: MemberTier.fromId(nextTier),
     points: points,
     tierProgress: tierProgress,
-    amountToNextTierMmk: amountToNextTierMmk,
+    pointsToNextTier: pointsToNextTier,
     notificationCount: notificationCount,
     rewardsCount: rewardsCount,
     photoAssetPath: photoAssetPath,

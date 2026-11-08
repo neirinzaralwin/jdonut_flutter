@@ -40,7 +40,7 @@ class DonutRefreshControl extends StatelessWidget {
               1.0,
             );
         return ColoredBox(
-          color: backgroundColor ?? const Color(0x00000000),
+          color: backgroundColor ?? CupertinoColors.transparent,
           child: Align(
             alignment: Alignment.bottomCenter,
             child: _DonutIndicator(

@@ -10,6 +10,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     required this.badge,
     required this.authGradientTop,
     required this.homeHeader,
+    required this.frostLight,
     required this.navBar,
     required this.banner,
     required this.ringTrack,
@@ -26,6 +27,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     badge: AppPalette.orange,
     authGradientTop: AppPalette.pinkSubtle,
     homeHeader: AppPalette.peachHeader,
+    frostLight: AppPalette.pinkLight,
     navBar: AppPalette.navBar,
     banner: AppPalette.purple,
     ringTrack: AppPalette.divider,
@@ -50,6 +52,9 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
   final Color badge;
   final Color authGradientTop;
   final Color homeHeader;
+
+  /// Light end of the pink icing gradient (points ring).
+  final Color frostLight;
   final Color navBar;
   final Color banner;
   final Color ringTrack;

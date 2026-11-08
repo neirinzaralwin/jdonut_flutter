@@ -65,35 +65,15 @@ class _ProductBody extends ConsumerWidget {
     final quantityProvider = productQuantityProvider(product.id);
     final quantity = ref.watch(quantityProvider);
     final notifier = ref.read(quantityProvider.notifier);
+    final stepper = QuantityStepper(
+      quantity: quantity,
+      onDecrease: quantity > 0 ? notifier.decrement : null,
+      onIncrease: quantity < CartQuantity.max ? notifier.increment : null,
+    );
     final bottomInset = MediaQuery.paddingOf(context).bottom;
     return Stack(
       children: [
-        SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(
-            AppSpacing.s4,
-            AppSpacing.s2,
-            AppSpacing.s4,
-            // Room to scroll the text clear of the fade and the bar.
-            AppBottomFade.defaultHeight + AppSizes.buttonHeight + bottomInset,
-          ),
-          child: Column(
-            children: [
-              ProductInfoCard(
-                product: product,
-                heroScope: heroScope,
-                bottomOverlay: QuantityStepper(
-                  quantity: quantity,
-                  onDecrease: quantity > 0 ? notifier.decrement : null,
-                  onIncrease: quantity < CartQuantity.max
-                      ? notifier.increment
-                      : null,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.s6),
-              WhatsThis(description: product.description),
-            ],
-          ),
-        ),
+        _content(bottomInset, stepper),
         Positioned(
           left: 0,
           right: 0,
@@ -114,6 +94,27 @@ class _ProductBody extends ConsumerWidget {
       ],
     );
   }
+
+  Widget _content(double bottomInset, Widget stepper) => SingleChildScrollView(
+    padding: EdgeInsets.fromLTRB(
+      AppSpacing.s4,
+      AppSpacing.s2,
+      AppSpacing.s4,
+      // Room to scroll the text clear of the fade and the bar.
+      AppBottomFade.defaultHeight + AppSizes.buttonHeight + bottomInset,
+    ),
+    child: Column(
+      children: [
+        ProductInfoCard(
+          product: product,
+          heroScope: heroScope,
+          bottomOverlay: stepper,
+        ),
+        const SizedBox(height: AppSpacing.s6),
+        WhatsThis(description: product.description),
+      ],
+    ),
+  );
 }
 
 class _LoadingBody extends StatelessWidget {

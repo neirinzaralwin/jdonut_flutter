@@ -12,46 +12,22 @@ class OnboardingHero extends StatelessWidget {
 
   final Animation<double> animation;
 
-  /// Circle layout (alignment can sit past the edge so circles bleed off).
+  /// Where each circle sits and how big it is (fraction of the shortest
+  /// side). Alignments past ±1 let the circles bleed off the edges, like the
+  /// design; the last one is the big centre circle with the logo.
+  static const List<(Alignment, double)> _layout = [
+    (Alignment(-1.3, -0.9), 0.38),
+    (Alignment(1.35, -0.7), 0.34),
+    (Alignment(-1.2, 1.05), 0.3),
+    (Alignment(1.2, 1.1), 0.32),
+    (Alignment.center, 0.62),
+  ];
+
   static const double _diameterScale = 1.4;
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final appColors = context.appColors;
-    final circles = [
-      _CircleSpec(
-        alignment: const Alignment(-1.3, -0.9),
-        sizeFactor: 0.38,
-        background: colors.primary,
-        icing: appColors.tierGold.light,
-      ),
-      _CircleSpec(
-        alignment: const Alignment(1.35, -0.7),
-        sizeFactor: 0.34,
-        background: appColors.banner,
-        icing: colors.secondary,
-      ),
-      _CircleSpec(
-        alignment: const Alignment(-1.2, 1.05),
-        sizeFactor: 0.3,
-        background: appColors.badge,
-        icing: colors.surface,
-      ),
-      _CircleSpec(
-        alignment: const Alignment(1.2, 1.1),
-        sizeFactor: 0.32,
-        background: colors.primaryContainer,
-        icing: colors.secondary,
-      ),
-      _CircleSpec(
-        alignment: Alignment.center,
-        sizeFactor: 0.62,
-        background: colors.surface,
-        icing: colors.secondary,
-        imageAsset: AppAssets.appLogo,
-      ),
-    ];
+    final circles = _circles(context);
     return LayoutBuilder(
       builder: (context, constraints) => Stack(
         clipBehavior: Clip.none,
@@ -79,6 +55,29 @@ class OnboardingHero extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Pairs [_layout] with theme colours (background, icing).
+  List<_CircleSpec> _circles(BuildContext context) {
+    final colors = context.colors;
+    final appColors = context.appColors;
+    final paints = [
+      (colors.primary, appColors.tierGold.light),
+      (appColors.banner, colors.secondary),
+      (appColors.badge, colors.surface),
+      (colors.primaryContainer, colors.secondary),
+      (colors.surface, colors.secondary),
+    ];
+    return [
+      for (final (index, (alignment, size)) in _layout.indexed)
+        _CircleSpec(
+          alignment: alignment,
+          sizeFactor: size,
+          background: paints[index].$1,
+          icing: paints[index].$2,
+          imageAsset: index == _layout.length - 1 ? AppAssets.appLogo : null,
+        ),
+    ];
   }
 }
 

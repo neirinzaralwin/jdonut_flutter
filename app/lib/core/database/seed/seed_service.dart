@@ -15,44 +15,69 @@ class SeedService {
   final AppDatabase _database;
   final AssetBundle _bundle;
 
-  static const int seedVersion = 3;
+  static const int seedVersion = 4;
   static const String _versionKey = 'seed_version';
   static const String _seedDirectory = 'assets/seed';
 
-  Future<void> seedIfNeeded() async {
+  /// [withCatalog] false (debug `SKIP_SEED`) loads only the member and
+  /// challenges, and doesn't record the seed version — so a normal run later
+  /// still seeds the catalog.
+  Future<void> seedIfNeeded({bool withCatalog = true}) async {
     if (await _storedVersion() == seedVersion) return;
+    final data = await _loadAll();
+    await _database.transaction(() async {
+      if (withCatalog) {
+        await CatalogWriter(_database).replaceCatalog(
+          products: data.products,
+          banners: data.banners,
+          sections: data.sections,
+          shops: data.shops,
+        );
+      }
+      await _writeMember(data.member, data.challenges, markSeeded: withCatalog);
+    });
+  }
+
+  Future<_SeedData> _loadAll() async {
     final files = await Future.wait([
       for (final name in ['products', 'banners', 'sections', 'shops', 'member'])
         _load(name),
     ]);
-    final data = (
-      products: (files[0] as List<dynamic>).cast<Json>(),
-      banners: (files[1] as List<dynamic>).cast<Json>(),
-      sections: (files[2] as List<dynamic>).cast<Json>(),
-      shops: (files[3] as List<dynamic>).cast<Json>(),
-      member: (files[4] as Json)['member'] as Json,
+    List<Json> list(Object file) => (file as List<dynamic>).cast<Json>();
+    final member = files[4] as Json;
+    return (
+      products: list(files[0]),
+      banners: list(files[1]),
+      sections: list(files[2]),
+      shops: list(files[3]),
+      member: member['member'] as Json,
+      challenges: list(member['challenges'] as Object),
     );
+  }
+
+  /// The member, their challenges, and the seed version, in one batch.
+  Future<void> _writeMember(
+    Json member,
+    List<Json> challenges, {
+    required bool markSeeded,
+  }) {
     final db = _database;
-    await db.transaction(() async {
-      await CatalogWriter(db).replaceCatalog(
-        products: data.products,
-        banners: data.banners,
-        sections: data.sections,
-        shops: data.shops,
-      );
-      await db.batch((batch) {
-        batch
-          ..insert(
-            db.members,
-            memberFromJson(data.member),
-            mode: InsertMode.insertOrReplace,
-          )
-          ..insert(
-            db.appMeta,
-            AppMetaCompanion.insert(key: _versionKey, value: '$seedVersion'),
-            mode: InsertMode.insertOrReplace,
-          );
-      });
+    return db.batch((batch) {
+      batch
+        ..deleteAll(db.challenges)
+        ..insertAll(db.challenges, challenges.map(challengeFromJson))
+        ..insert(
+          db.members,
+          memberFromJson(member),
+          mode: InsertMode.insertOrReplace,
+        );
+      if (markSeeded) {
+        batch.insert(
+          db.appMeta,
+          AppMetaCompanion.insert(key: _versionKey, value: '$seedVersion'),
+          mode: InsertMode.insertOrReplace,
+        );
+      }
     });
   }
 
@@ -72,3 +97,12 @@ class SeedService {
     };
   }
 }
+
+typedef _SeedData = ({
+  List<Json> products,
+  List<Json> banners,
+  List<Json> sections,
+  List<Json> shops,
+  Json member,
+  List<Json> challenges,
+});

@@ -17,6 +17,14 @@ abstract final class AppDurations {
   static const Duration cartBarEnter = Duration(milliseconds: 550);
   static const Duration addedFeedback = Duration(milliseconds: 1400);
   static const Duration donutSpin = Duration(milliseconds: 900);
+
+  // Rewards (Task 3)
+  static const Duration rewardsEntrance = Duration(milliseconds: 1900);
+  static const Duration challengeEntrance = Duration(milliseconds: 1100);
+  static const Duration tabSwitch = Duration(milliseconds: 380);
+  static const Duration earnPulse = Duration(milliseconds: 1300);
+  static const Duration pointsFlight = Duration(milliseconds: 750);
+  static const Duration pointsGain = Duration(milliseconds: 1100);
   static const Duration bannerSlide = Duration(milliseconds: 450);
   static const Duration connectionToastVisible = Duration(seconds: 3);
 }
@@ -46,6 +54,14 @@ abstract final class AppMotionValues {
   static const double numberSlideFraction = 0.6;
   static const double bannerHiddenOffset = 2;
   static const double toastHiddenScale = 0.85;
+  static const double earnPulseScale = 1.06;
+
+  /// Ring "gulp" when earned points land, and the arc height of the flight
+  /// (fraction of the travel distance).
+  static const double ringGainScale = 1.08;
+  static const double flightArc = 0.35;
+  static const double tierCurrentScale = 1.12;
+  static const double tabSlideFraction = 0.08;
 }
 
 /// A staggered slice of one entrance animation: item `index` runs from
@@ -86,6 +102,30 @@ abstract final class AppStagger {
     step: 0.12,
     length: 0.5,
   );
+  // Rewards screen entrance (one controller, AppDurations.rewardsEntrance).
+  static const StaggerSlot rewardsHeader = StaggerSlot(start: 0, length: 0.3);
+  static const StaggerSlot tierLadder = StaggerSlot(
+    start: 0.08,
+    step: 0.12,
+    length: 0.35,
+  );
+  static const StaggerSlot tierLine = StaggerSlot(start: 0.4, length: 0.45);
+  static const StaggerSlot pointsRing = StaggerSlot(start: 0.12, length: 0.78);
+  static const StaggerSlot rewardsBadge = StaggerSlot(start: 0.55, length: 0.4);
+  static const StaggerSlot rewardsTabs = StaggerSlot(start: 0.45, length: 0.35);
+
+  // Challenge list (replays on every tab switch).
+  static const StaggerSlot challengeCards = StaggerSlot(
+    start: 0,
+    step: 0.14,
+    length: 0.45,
+  );
+  static const StaggerSlot challengeArt = StaggerSlot(
+    start: 0.25,
+    step: 0.14,
+    length: 0.6,
+  );
+
   static const StaggerSlot welcomeAction = StaggerSlot(
     start: 0.75,
     length: 0.25,

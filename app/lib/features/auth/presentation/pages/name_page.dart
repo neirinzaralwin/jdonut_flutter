@@ -68,30 +68,7 @@ class _NamePageState extends ConsumerState<NamePage> {
         AuthProgress.nameStep,
         AuthMode.register,
       ),
-      body: Column(
-        children: [
-          AppTextField(
-            controller: _firstName,
-            focusNode: _firstNameFocus,
-            hintText: context.l10n.firstNameHint,
-            textInputAction: TextInputAction.next,
-            autofillHints: const [AutofillHints.givenName],
-            errorText: _firstNameFocus.wasTouched ? _message(firstError) : null,
-            onChanged: _onChanged,
-          ),
-          const SizedBox(height: AppSpacing.s4),
-          AppTextField(
-            controller: _lastName,
-            focusNode: _lastNameFocus,
-            hintText: context.l10n.lastNameHint,
-            textInputAction: TextInputAction.done,
-            autofillHints: const [AutofillHints.familyName],
-            // Optional field: show the message as soon as it is typed.
-            errorText: _message(lastError),
-            onChanged: _onChanged,
-          ),
-        ],
-      ),
+      body: _fields(firstError, lastError),
       action: AppButton(
         label: context.l10n.continueLabel,
         onPressed: canContinue
@@ -100,6 +77,31 @@ class _NamePageState extends ConsumerState<NamePage> {
       ),
     );
   }
+
+  Widget _fields(NameError? firstError, NameError? lastError) => Column(
+    children: [
+      AppTextField(
+        controller: _firstName,
+        focusNode: _firstNameFocus,
+        hintText: context.l10n.firstNameHint,
+        textInputAction: TextInputAction.next,
+        autofillHints: const [AutofillHints.givenName],
+        errorText: _firstNameFocus.wasTouched ? _message(firstError) : null,
+        onChanged: _onChanged,
+      ),
+      const SizedBox(height: AppSpacing.s4),
+      AppTextField(
+        controller: _lastName,
+        focusNode: _lastNameFocus,
+        hintText: context.l10n.lastNameHint,
+        textInputAction: TextInputAction.done,
+        autofillHints: const [AutofillHints.familyName],
+        // Optional field: show the message as soon as it is typed.
+        errorText: _message(lastError),
+        onChanged: _onChanged,
+      ),
+    ],
+  );
 
   String? _message(NameError? error) => switch (error) {
     null => null,

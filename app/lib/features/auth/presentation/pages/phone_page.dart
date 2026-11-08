@@ -66,24 +66,7 @@ class _PhonePageState extends ConsumerState<PhonePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AppTextField(
-            controller: _controller,
-            focusNode: _focusNode,
-            hintText: context.l10n.phoneHint,
-            prefixText: '$myanmarCountryCode  ',
-            keyboardType: TextInputType.phone,
-            textInputAction: TextInputAction.done,
-            autofillHints: const [AutofillHints.telephoneNumberNational],
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[\d\s-]')),
-              LengthLimitingTextInputFormatter(_maxInputLength),
-            ],
-            errorText: _focusNode.wasTouched && !isValid
-                ? context.l10n.phoneErrorInvalid
-                : null,
-            onChanged: _onChanged,
-            onSubmitted: (_) => isValid ? _submit() : null,
-          ),
+          _phoneField(isValid: isValid),
           if (submit.failure != null)
             PhoneFailureMessage(failure: submit.failure!),
         ],
@@ -95,4 +78,23 @@ class _PhonePageState extends ConsumerState<PhonePage> {
       ),
     );
   }
+
+  Widget _phoneField({required bool isValid}) => AppTextField(
+    controller: _controller,
+    focusNode: _focusNode,
+    hintText: context.l10n.phoneHint,
+    prefixText: '$myanmarCountryCode  ',
+    keyboardType: TextInputType.phone,
+    textInputAction: TextInputAction.done,
+    autofillHints: const [AutofillHints.telephoneNumberNational],
+    inputFormatters: [
+      FilteringTextInputFormatter.allow(RegExp(r'[\d\s-]')),
+      LengthLimitingTextInputFormatter(_maxInputLength),
+    ],
+    errorText: _focusNode.wasTouched && !isValid
+        ? context.l10n.phoneErrorInvalid
+        : null,
+    onChanged: _onChanged,
+    onSubmitted: (_) => isValid ? _submit() : null,
+  );
 }

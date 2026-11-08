@@ -106,7 +106,7 @@ How to write: pure-domain types (`Result`, `Failure`, `SessionState`, `OtpOutcom
   - `AppNetworkImage` (cached, asset fallback, placeholder, error) — all images.
   - `Skeleton` / shimmer — all loading states (no spinners on Home).
   - `AppEmptyState` / `AppErrorState` — every section's empty/error.
-  - `OfflineBanner` — offline indicator.
+  - `ConnectionBanner` — toast-like pill: dark while offline → green "back online" → floats away (lives in `app.dart`, shows on every screen).
 - Every async screen/section handles **loading, data, empty, error** (brief).
 - Layout must survive 4.7"–6.9" and text scale 1.3: use `Flexible`/`Expanded`, `maxLines` + `overflow`, no fixed text heights.
 

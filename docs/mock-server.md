@@ -9,7 +9,7 @@ npm install
 npm start            # http://localhost:3000
 npm run sync-seed    # copy db.json → app/assets/seed/*.json
 ```
-Android emulator base URL: `http://10.0.2.2:3000`. iOS simulator: `http://localhost:3000`.
+The app picks the address itself: Android emulator `http://10.0.2.2:3000`, iOS simulator `http://localhost:3000`. Real device: `flutter run --dart-define=API_BASE_URL=http://<your-mac-ip>:3000` (and allow cleartext for that IP).
 
 ## Contract
 All responses are wrapped:

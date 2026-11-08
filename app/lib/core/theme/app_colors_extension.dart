@@ -10,9 +10,11 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     required this.badge,
     required this.authGradientTop,
     required this.homeHeader,
+    required this.navBar,
     required this.banner,
     required this.ringTrack,
     required this.textSecondary,
+    required this.tierBronze,
     required this.tierSilver,
     required this.tierGold,
     required this.tierPlatinum,
@@ -23,13 +25,24 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     link: AppPalette.pink,
     badge: AppPalette.orange,
     authGradientTop: AppPalette.pinkSubtle,
-    homeHeader: AppPalette.orangeSubtle,
+    homeHeader: AppPalette.peachHeader,
+    navBar: AppPalette.navBar,
     banner: AppPalette.purple,
     ringTrack: AppPalette.divider,
     textSecondary: AppPalette.inkSecondary,
-    tierSilver: AppPalette.tierSilver,
-    tierGold: AppPalette.tierGold,
-    tierPlatinum: AppPalette.tierPlatinum,
+    tierBronze: TierColors(
+      AppPalette.tierBronzeLight,
+      AppPalette.tierBronzeDark,
+    ),
+    tierSilver: TierColors(
+      AppPalette.tierSilverLight,
+      AppPalette.tierSilverDark,
+    ),
+    tierGold: TierColors(AppPalette.tierGoldLight, AppPalette.tierGoldDark),
+    tierPlatinum: TierColors(
+      AppPalette.tierPlatinumLight,
+      AppPalette.tierPlatinumDark,
+    ),
     success: AppPalette.success,
   );
 
@@ -37,12 +50,14 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
   final Color badge;
   final Color authGradientTop;
   final Color homeHeader;
+  final Color navBar;
   final Color banner;
   final Color ringTrack;
   final Color textSecondary;
-  final Color tierSilver;
-  final Color tierGold;
-  final Color tierPlatinum;
+  final TierColors tierBronze;
+  final TierColors tierSilver;
+  final TierColors tierGold;
+  final TierColors tierPlatinum;
   final Color success;
 
   @override
@@ -50,4 +65,20 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
 
   @override
   AppColorsExtension lerp(AppColorsExtension? other, double t) => this;
+}
+
+/// A tier's light → dark pair, matching its badge icon.
+@immutable
+class TierColors {
+  const TierColors(this.light, this.dark);
+
+  final Color light;
+  final Color dark;
+
+  /// Diagonal shine, like the shield icons.
+  LinearGradient get gradient => LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [light, dark],
+  );
 }

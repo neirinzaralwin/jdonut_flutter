@@ -10,10 +10,15 @@ abstract final class AppDurations {
   static const Duration entrance = Duration(milliseconds: 900);
   static const Duration pointsCountUp = Duration(milliseconds: 1400);
   static const Duration staggerStep = Duration(milliseconds: 70);
-  static const Duration bannerAutoPlay = Duration(seconds: 4);
+  static const Duration bannerAutoPlay = Duration(seconds: 3);
   static const Duration otpShake = Duration(milliseconds: 400);
   static const Duration pageTransition = Duration(milliseconds: 350);
   static const Duration countdownTick = Duration(seconds: 1);
+  static const Duration cartBarEnter = Duration(milliseconds: 550);
+  static const Duration addedFeedback = Duration(milliseconds: 1400);
+  static const Duration donutSpin = Duration(milliseconds: 900);
+  static const Duration bannerSlide = Duration(milliseconds: 450);
+  static const Duration connectionToastVisible = Duration(seconds: 3);
 }
 
 abstract final class AppCurves {
@@ -21,6 +26,9 @@ abstract final class AppCurves {
   static const Curve emphasized = Curves.easeOutBack;
   static const Curve pop = Curves.elasticOut;
   static const Curve exit = Curves.easeInCubic;
+
+  /// Soft overshoot for elements that "land" (Add to cart bar).
+  static const Curve spring = Cubic(0.18, 1.25, 0.4, 1);
 }
 
 /// Distances and scales used by animations.
@@ -33,6 +41,11 @@ abstract final class AppMotionValues {
   static const double driftDistance = 60;
   static const double tileSlideFraction = 0.4;
   static const double heroVerticalDrift = 0.2;
+  static const double cartBarHiddenOffset = 1.6;
+  static const double cartBarHiddenScale = 0.9;
+  static const double numberSlideFraction = 0.6;
+  static const double bannerHiddenOffset = 2;
+  static const double toastHiddenScale = 0.85;
 }
 
 /// A staggered slice of one entrance animation: item `index` runs from
@@ -68,6 +81,11 @@ abstract final class AppStagger {
     length: 0.45,
   );
   static const StaggerSlot welcomeTitle = StaggerSlot(start: 0.6, length: 0.3);
+  static const StaggerSlot homeSections = StaggerSlot(
+    start: 0,
+    step: 0.12,
+    length: 0.5,
+  );
   static const StaggerSlot welcomeAction = StaggerSlot(
     start: 0.75,
     length: 0.25,

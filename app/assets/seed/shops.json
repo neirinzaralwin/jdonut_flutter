@@ -1,42 +1,33 @@
 {
-  "version": 1,
-  "updatedAt": "2026-11-07T00:00:00.000Z",
+  "version": 3,
+  "updatedAt": "2026-11-08T00:00:00.000Z",
   "data": [
     {
-      "id": "s_yankin",
-      "name": "J'Donuts Yankin",
-      "address": "Kabar Aye Pagoda Rd, Yankin",
+      "id": "s_myaynigone",
+      "name": "Myaynigone J'Donut",
+      "address": "2972 Pyay Road, Sanchaung Township, Yangon.",
       "distanceKm": 1.2,
       "openHours": "8:00 AM – 9:00 PM",
-      "imageUrl": "/static/images/shops/s_yankin.png",
-      "assetPath": "assets/images/shops/s_yankin.png"
+      "imageUrl": "/static/images/shops/s_myaynigone.jpg",
+      "assetPath": "assets/images/shops/s_myaynigone.jpg"
     },
     {
       "id": "s_junction",
-      "name": "J'Donuts Junction City",
-      "address": "Bogyoke Aung San Rd, Pabedan",
+      "name": "Junction City J'Donut",
+      "address": "Bogyoke Aung San Road, Pabedan Township, Yangon.",
       "distanceKm": 3.4,
       "openHours": "9:00 AM – 9:30 PM",
-      "imageUrl": "/static/images/shops/s_junction.png",
-      "assetPath": "assets/images/shops/s_junction.png"
+      "imageUrl": "/static/images/shops/s_junction.jpg",
+      "assetPath": "assets/images/shops/s_junction.jpg"
     },
     {
-      "id": "s_myay_nu",
-      "name": "J'Donuts Myay Nu",
-      "address": "Myay Nu St, Sanchaung",
+      "id": "s_yankin",
+      "name": "Yankin J'Donut",
+      "address": "Kabar Aye Pagoda Road, Yankin Township, Yangon.",
       "distanceKm": 4.1,
       "openHours": "8:00 AM – 9:00 PM",
-      "imageUrl": "/static/images/shops/s_myay_nu.png",
-      "assetPath": "assets/images/shops/s_myay_nu.png"
-    },
-    {
-      "id": "s_hledan",
-      "name": "J'Donuts Hledan",
-      "address": "Insein Rd, Hledan",
-      "distanceKm": 5,
-      "openHours": "8:30 AM – 9:00 PM",
-      "imageUrl": "/static/images/shops/s_hledan.png",
-      "assetPath": "assets/images/shops/s_hledan.png"
+      "imageUrl": "/static/images/shops/s_yankin.jpg",
+      "assetPath": "assets/images/shops/s_yankin.jpg"
     }
   ]
 }

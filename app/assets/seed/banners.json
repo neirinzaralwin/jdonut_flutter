@@ -1,24 +1,42 @@
 {
-  "version": 1,
-  "updatedAt": "2026-11-07T00:00:00.000Z",
+  "version": 3,
+  "updatedAt": "2026-11-08T00:00:00.000Z",
   "data": [
     {
-      "id": "b_buy2get1",
-      "title": "Buy 2 get 1 free",
-      "subtitle": "Every Friday",
-      "imageUrl": "/static/images/banners/b_buy2get1.png",
-      "assetPath": "assets/images/banners/b_buy2get1.png",
-      "productId": "p_coconut",
-      "order": 1
+      "id": "b_glaze_drip",
+      "title": "New drip glaze",
+      "subtitle": "Fresh every morning",
+      "productId": "p_strawberry_ring",
+      "order": 1,
+      "imageUrl": "/static/images/banners/b_glaze_drip.jpg",
+      "assetPath": "assets/images/banners/b_glaze_drip.jpg"
     },
     {
-      "id": "b_matcha",
-      "title": "New: Matcha Glaze",
-      "subtitle": "15% off this week",
-      "imageUrl": "/static/images/banners/b_matcha.png",
-      "assetPath": "assets/images/banners/b_matcha.png",
-      "productId": "p_matcha",
-      "order": 2
+      "id": "b_sprinkle_party",
+      "title": "Sprinkle party",
+      "subtitle": "15% off Unicorn Sprinkle",
+      "productId": "p_unicorn_sprinkle",
+      "order": 2,
+      "imageUrl": "/static/images/banners/b_sprinkle_party.jpg",
+      "assetPath": "assets/images/banners/b_sprinkle_party.jpg"
+    },
+    {
+      "id": "b_donut_stack",
+      "title": "Stack them up",
+      "subtitle": "Boxes for every mood",
+      "productId": "p_box_six",
+      "order": 3,
+      "imageUrl": "/static/images/banners/b_donut_stack.jpg",
+      "assetPath": "assets/images/banners/b_donut_stack.jpg"
+    },
+    {
+      "id": "b_donut_worry",
+      "title": "Donut worry, be happy",
+      "subtitle": "Order online",
+      "productId": "p_classic_dozen",
+      "order": 4,
+      "imageUrl": "/static/images/banners/b_donut_worry.jpg",
+      "assetPath": "assets/images/banners/b_donut_worry.jpg"
     }
   ]
 }

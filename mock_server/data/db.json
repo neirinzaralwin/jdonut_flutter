@@ -1,38 +1,265 @@
 {
-  "meta": { "updatedAt": "2026-11-07T00:00:00.000Z" },
+  "meta": {
+    "updatedAt": "2026-11-08T00:00:00.000Z"
+  },
   "products": [
-    { "id": "p_coconut", "code": "JD022123", "name": "Coconut Donut", "priceMmk": 3200, "isNew": true, "discountPercent": null,
-      "imageUrl": "/static/images/products/p_coconut.png", "assetPath": "assets/images/products/p_coconut.png",
-      "description": "Enjoy our scrumptious donuts topped with toasted coconut flakes on a creamy vanilla glaze." },
-    { "id": "p_strawberry", "code": "JD022124", "name": "Strawberry Sprinkle", "priceMmk": 2800, "isNew": false, "discountPercent": 10,
-      "imageUrl": "/static/images/products/p_strawberry.png", "assetPath": "assets/images/products/p_strawberry.png",
-      "description": "Classic ring donut dipped in strawberry icing with rainbow sprinkles." },
-    { "id": "p_chocolate", "code": "JD022125", "name": "Double Chocolate", "priceMmk": 3500, "isNew": false, "discountPercent": null,
-      "imageUrl": "/static/images/products/p_chocolate.png", "assetPath": "assets/images/products/p_chocolate.png",
-      "description": "Chocolate dough, chocolate glaze, chocolate drizzle." },
-    { "id": "p_matcha", "code": "JD022126", "name": "Matcha Glaze", "priceMmk": 3800, "isNew": true, "discountPercent": 15,
-      "imageUrl": "/static/images/products/p_matcha.png", "assetPath": "assets/images/products/p_matcha.png",
-      "description": "Japanese matcha glaze with white chocolate crumble." },
-    { "id": "p_caramel", "code": "JD022127", "name": "Salted Caramel", "priceMmk": 3300, "isNew": false, "discountPercent": null,
-      "imageUrl": "/static/images/products/p_caramel.png", "assetPath": "assets/images/products/p_caramel.png",
-      "description": "Caramel-filled donut finished with sea salt flakes." },
-    { "id": "p_iced_latte", "code": "JD030001", "name": "Iced Latte", "priceMmk": 4500, "isNew": false, "discountPercent": null,
-      "imageUrl": "/static/images/products/p_iced_latte.png", "assetPath": "assets/images/products/p_iced_latte.png",
-      "description": "Double-shot espresso over milk and ice." }
+    {
+      "id": "p_coconut",
+      "code": "JD022123",
+      "name": "Coconut Donut",
+      "priceMmk": 3200,
+      "isNew": true,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_coconut.jpg",
+      "assetPath": "assets/images/products/p_coconut.jpg",
+      "description": "Enjoy our scrumptious donuts topped with toasted coconut flakes on a creamy vanilla glaze. Soft inside, a little crunchy outside."
+    },
+    {
+      "id": "p_strawberry_ring",
+      "code": "JD022124",
+      "name": "Strawberry Pon Ring",
+      "priceMmk": 3000,
+      "isNew": true,
+      "discountPercent": 10,
+      "imageUrl": "/static/images/products/p_strawberry_ring.jpg",
+      "assetPath": "assets/images/products/p_strawberry_ring.jpg",
+      "description": "Chewy mochi-style ring dipped in strawberry glaze with freeze-dried berry bits."
+    },
+    {
+      "id": "p_matcha_ring",
+      "code": "JD022125",
+      "name": "Matcha Ring",
+      "priceMmk": 3500,
+      "isNew": false,
+      "discountPercent": 10,
+      "imageUrl": "/static/images/products/p_matcha_ring.jpg",
+      "assetPath": "assets/images/products/p_matcha_ring.jpg",
+      "description": "Pon ring with a Japanese matcha drizzle and a dusting of sugar."
+    },
+    {
+      "id": "p_blueberry_frost",
+      "code": "JD022126",
+      "name": "Blueberry Frost",
+      "priceMmk": 3200,
+      "isNew": true,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_blueberry_frost.jpg",
+      "assetPath": "assets/images/products/p_blueberry_frost.jpg",
+      "description": "Blueberry icing finished with purple crunch sprinkles."
+    },
+    {
+      "id": "p_choco_sprinkle",
+      "code": "JD022127",
+      "name": "Chocolate Sprinkle",
+      "priceMmk": 2800,
+      "isNew": false,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_choco_sprinkle.jpg",
+      "assetPath": "assets/images/products/p_choco_sprinkle.jpg",
+      "description": "Classic ring donut dipped in dark chocolate and covered in chocolate sprinkles."
+    },
+    {
+      "id": "p_double_choc_ring",
+      "code": "JD022128",
+      "name": "Double Choc Ring",
+      "priceMmk": 3400,
+      "isNew": true,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_double_choc_ring.jpg",
+      "assetPath": "assets/images/products/p_double_choc_ring.jpg",
+      "description": "Chocolate pon ring with white chocolate stripes and brownie bites."
+    },
+    {
+      "id": "p_unicorn_sprinkle",
+      "code": "JD022129",
+      "name": "Unicorn Sprinkle",
+      "priceMmk": 3100,
+      "isNew": false,
+      "discountPercent": 15,
+      "imageUrl": "/static/images/products/p_unicorn_sprinkle.jpg",
+      "assetPath": "assets/images/products/p_unicorn_sprinkle.jpg",
+      "description": "Lilac glaze with a rainbow of sprinkles."
+    },
+    {
+      "id": "p_almond_crunch",
+      "code": "JD022130",
+      "name": "Almond Crunch",
+      "priceMmk": 3500,
+      "isNew": false,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_almond_crunch.jpg",
+      "assetPath": "assets/images/products/p_almond_crunch.jpg",
+      "description": "Chocolate glaze topped with roasted almond and granola crunch."
+    },
+    {
+      "id": "p_choco_peanut",
+      "code": "JD022131",
+      "name": "Choco Peanut Duo",
+      "priceMmk": 3600,
+      "isNew": false,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_choco_peanut.jpg",
+      "assetPath": "assets/images/products/p_choco_peanut.jpg",
+      "description": "Half chocolate, half caramel peanut — the best of both."
+    },
+    {
+      "id": "p_raspberry_bomboloni",
+      "code": "JD022132",
+      "name": "Raspberry Bomboloni",
+      "priceMmk": 3300,
+      "isNew": false,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_raspberry_bomboloni.jpg",
+      "assetPath": "assets/images/products/p_raspberry_bomboloni.jpg",
+      "description": "Sugar-dusted Italian doughnut filled with raspberry jam."
+    },
+    {
+      "id": "p_sugar_jam",
+      "code": "JD022133",
+      "name": "Sugar Jam Filled",
+      "priceMmk": 2900,
+      "isNew": false,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_sugar_jam.jpg",
+      "assetPath": "assets/images/products/p_sugar_jam.jpg",
+      "description": "Pillowy doughnut rolled in sugar with a strawberry jam centre."
+    },
+    {
+      "id": "p_box_six",
+      "code": "JD030001",
+      "name": "Signature Box of 6",
+      "priceMmk": 16500,
+      "isNew": false,
+      "discountPercent": 15,
+      "imageUrl": "/static/images/products/p_box_six.jpg",
+      "assetPath": "assets/images/products/p_box_six.jpg",
+      "description": "Six of our signature donuts in one box — perfect for sharing."
+    },
+    {
+      "id": "p_classic_dozen",
+      "code": "JD030002",
+      "name": "Classic Dozen",
+      "priceMmk": 30000,
+      "isNew": false,
+      "discountPercent": 20,
+      "imageUrl": "/static/images/products/p_classic_dozen.jpg",
+      "assetPath": "assets/images/products/p_classic_dozen.jpg",
+      "description": "Twelve classic donuts, mixed glazes and sprinkles."
+    }
   ],
   "banners": [
-    { "id": "b_buy2get1", "title": "Buy 2 get 1 free", "subtitle": "Every Friday", "imageUrl": "/static/images/banners/b_buy2get1.png", "assetPath": "assets/images/banners/b_buy2get1.png", "productId": "p_coconut", "order": 1 },
-    { "id": "b_matcha", "title": "New: Matcha Glaze", "subtitle": "15% off this week", "imageUrl": "/static/images/banners/b_matcha.png", "assetPath": "assets/images/banners/b_matcha.png", "productId": "p_matcha", "order": 2 }
+    {
+      "id": "b_glaze_drip",
+      "title": "New drip glaze",
+      "subtitle": "Fresh every morning",
+      "productId": "p_strawberry_ring",
+      "order": 1,
+      "imageUrl": "/static/images/banners/b_glaze_drip.jpg",
+      "assetPath": "assets/images/banners/b_glaze_drip.jpg"
+    },
+    {
+      "id": "b_sprinkle_party",
+      "title": "Sprinkle party",
+      "subtitle": "15% off Unicorn Sprinkle",
+      "productId": "p_unicorn_sprinkle",
+      "order": 2,
+      "imageUrl": "/static/images/banners/b_sprinkle_party.jpg",
+      "assetPath": "assets/images/banners/b_sprinkle_party.jpg"
+    },
+    {
+      "id": "b_donut_stack",
+      "title": "Stack them up",
+      "subtitle": "Boxes for every mood",
+      "productId": "p_box_six",
+      "order": 3,
+      "imageUrl": "/static/images/banners/b_donut_stack.jpg",
+      "assetPath": "assets/images/banners/b_donut_stack.jpg"
+    },
+    {
+      "id": "b_donut_worry",
+      "title": "Donut worry, be happy",
+      "subtitle": "Order online",
+      "productId": "p_classic_dozen",
+      "order": 4,
+      "imageUrl": "/static/images/banners/b_donut_worry.jpg",
+      "assetPath": "assets/images/banners/b_donut_worry.jpg"
+    }
   ],
   "sections": [
-    { "id": "seasonal", "title": "Seasonal specials", "order": 1, "productIds": ["p_coconut", "p_matcha", "p_strawberry"] },
-    { "id": "popular", "title": "Popular", "order": 2, "productIds": ["p_chocolate", "p_caramel", "p_strawberry", "p_iced_latte"] },
-    { "id": "order_again", "title": "Order again", "order": 3, "productIds": ["p_coconut", "p_iced_latte"] }
+    {
+      "id": "seasonal",
+      "title": "Seasonal specials 💕",
+      "layout": "featured",
+      "order": 1,
+      "productIds": [
+        "p_strawberry_ring",
+        "p_matcha_ring",
+        "p_coconut",
+        "p_blueberry_frost"
+      ]
+    },
+    {
+      "id": "popular",
+      "title": "Popular 🔥",
+      "layout": "standard",
+      "order": 2,
+      "productIds": [
+        "p_choco_sprinkle",
+        "p_double_choc_ring",
+        "p_unicorn_sprinkle",
+        "p_almond_crunch",
+        "p_choco_peanut"
+      ]
+    },
+    {
+      "id": "order_again",
+      "title": "Order again",
+      "layout": "standard",
+      "order": 3,
+      "productIds": [
+        "p_coconut",
+        "p_raspberry_bomboloni",
+        "p_sugar_jam"
+      ]
+    },
+    {
+      "id": "boxes",
+      "title": "Donut boxes 🎁",
+      "layout": "standard",
+      "order": 4,
+      "productIds": [
+        "p_box_six",
+        "p_classic_dozen"
+      ]
+    }
   ],
   "shops": [
-    { "id": "s_yankin", "name": "J'Donuts Yankin", "address": "Kabar Aye Pagoda Rd, Yankin", "distanceKm": 1.2, "openHours": "8:00 AM – 9:00 PM", "imageUrl": "/static/images/shops/s_yankin.png", "assetPath": "assets/images/shops/s_yankin.png" },
-    { "id": "s_junction", "name": "J'Donuts Junction City", "address": "Bogyoke Aung San Rd, Pabedan", "distanceKm": 3.4, "openHours": "9:00 AM – 9:30 PM", "imageUrl": "/static/images/shops/s_junction.png", "assetPath": "assets/images/shops/s_junction.png" },
-    { "id": "s_myay_nu", "name": "J'Donuts Myay Nu", "address": "Myay Nu St, Sanchaung", "distanceKm": 4.1, "openHours": "8:00 AM – 9:00 PM", "imageUrl": "/static/images/shops/s_myay_nu.png", "assetPath": "assets/images/shops/s_myay_nu.png" },
-    { "id": "s_hledan", "name": "J'Donuts Hledan", "address": "Insein Rd, Hledan", "distanceKm": 5.0, "openHours": "8:30 AM – 9:00 PM", "imageUrl": "/static/images/shops/s_hledan.png", "assetPath": "assets/images/shops/s_hledan.png" }
+    {
+      "id": "s_myaynigone",
+      "name": "Myaynigone J'Donut",
+      "address": "2972 Pyay Road, Sanchaung Township, Yangon.",
+      "distanceKm": 1.2,
+      "openHours": "8:00 AM – 9:00 PM",
+      "imageUrl": "/static/images/shops/s_myaynigone.jpg",
+      "assetPath": "assets/images/shops/s_myaynigone.jpg"
+    },
+    {
+      "id": "s_junction",
+      "name": "Junction City J'Donut",
+      "address": "Bogyoke Aung San Road, Pabedan Township, Yangon.",
+      "distanceKm": 3.4,
+      "openHours": "9:00 AM – 9:30 PM",
+      "imageUrl": "/static/images/shops/s_junction.jpg",
+      "assetPath": "assets/images/shops/s_junction.jpg"
+    },
+    {
+      "id": "s_yankin",
+      "name": "Yankin J'Donut",
+      "address": "Kabar Aye Pagoda Road, Yankin Township, Yangon.",
+      "distanceKm": 4.1,
+      "openHours": "8:00 AM – 9:00 PM",
+      "imageUrl": "/static/images/shops/s_yankin.jpg",
+      "assetPath": "assets/images/shops/s_yankin.jpg"
+    }
   ]
 }

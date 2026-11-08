@@ -47,15 +47,16 @@ Files: `app_colors.dart` (raw `AppPalette`, internal), `app_colors_extension.dar
 | pinkLight | `#F893B8` | — | Points ring gradient end, donut progress art |
 | pinkSubtle | `#FCEDF2` | `appColors.authGradientTop` | Auth/onboarding background gradient (top → white) |
 | orange | `#FE7E1E` | `tertiary`, `appColors.badge` | New badge, "% off" discount badge, Rewards pill, notification count |
-| orangeSubtle | `#FDECDE` | `appColors.homeHeader` | Home member header wash |
+| peachHeader | `#FDEADC` | `appColors.homeHeader` | Home header base under `assets/images/home/home_background.png` (peach + frosted hexagon), refresh pull area |
+| navBar | `#2CBCE5` | `appColors.navBar` | Floating bottom-nav bar; active pill is `secondary` with a white border on a `secondary` strip |
 | purple | `#5D59A6` | `appColors.banner` | Promo banner background |
 | ink | `#1A1A1A` | `onSurface` | Headings and body text |
 | inkSecondary | `#8C8E93` | `onSurfaceVariant`, `appColors.textSecondary` | Hints, captions, +95 prefix, product code |
 | inkDisabled | `#B8B9C1` | — | Disabled text, Earn (incomplete) |
 | surface | `#FFFFFF` | `surface` | Cards, inputs, product detail card |
-| background | `#F5F5F7` | `scaffoldBackgroundColor` | Home, Product detail, Rewards lower area |
+| background | `#EBECEE` | `scaffoldBackgroundColor` | Home, Product detail, Rewards lower area |
 | divider | `#EEF0F1` | `outlineVariant`, `appColors.ringTrack` | Ring track, tab track, dividers |
-| tierSilver / tierGold / tierPlatinum | `#C9D4D5` / `#F9E3A0` / `#A4E4F4` | `appColors.tier*` | Tier ladder badges |
+| tier gradients (light → dark) | bronze `#FFD2A6→#E8914A` · silver `#F4F3F3→#BFBEBE` · gold `#FFF6D1→#FBCA45` · platinum `#D8F6FD→#64DEFC` | `appColors.tierX` (`TierColors`, `.gradient`) | Avatar ring, tier ladder — sampled from `assets/images/rewards/*.png` |
 | success | `#7DC37A` | `appColors.success` | Completed challenge cue |
 | error | `#E5484D` | `error` | Inline validation messages, error borders (not in designs — chosen for contrast) |
 
@@ -98,7 +99,10 @@ Text must survive 1.3× text scale: no fixed-height text containers; use `maxLin
 | Auth background | Vertical gradient `authGradientTop` → `surface` |
 | Product tile | White card radius 16, image top, `titleS` name, orange badge top-right |
 | Badge | Orange pill, white `labelS` |
-| Bottom nav | White bar; active item = sliding `primary` pill |
+| Bottom nav | Floating `navBar` bar (rounded top) over a pink strip; active tab = sliding pink pill with icon + label, others icon only. Order: Home, Reward, Order, Wallet, Settings |
+| Home header | Peach background image with hexagon, avatar in a tier-gradient ring (white gap), name + tier, white "kyats left" chip; orange notification pill pinned top-right while scrolling |
+| Banner carousel | Peeking cards (viewport 0.74, radius 24), loops, auto-advances every 3 s (`AppDurations.bannerAutoPlay`) |
+| Product tile | White card radius 20, image contained, name below; orange % off / New badge at the card's bottom-right; `featured` sections = wide cards, `standard` = tall cards |
 | Tabs (Rewards) | `outlineVariant` track; active = `primary` pill with white text |
 | Points ring | `CustomPainter`, pink gradient sweep over `ringTrack`, sprinkle decoration optional |
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jdonut/core/constants/app_assets.dart';
+import 'package:jdonut/core/l10n/l10n.dart';
 import 'package:jdonut/core/motion/app_motion.dart';
 import 'package:jdonut/core/theme/theme.dart';
 import 'package:jdonut/core/widgets/donut_art.dart';
@@ -22,7 +24,7 @@ class OnboardingHero extends StatelessWidget {
         alignment: const Alignment(-1.3, -0.9),
         sizeFactor: 0.38,
         background: colors.primary,
-        icing: appColors.tierGold,
+        icing: appColors.tierGold.light,
       ),
       _CircleSpec(
         alignment: const Alignment(1.35, -0.7),
@@ -45,8 +47,9 @@ class OnboardingHero extends StatelessWidget {
       _CircleSpec(
         alignment: Alignment.center,
         sizeFactor: 0.62,
-        background: appColors.authGradientTop,
+        background: colors.surface,
         icing: colors.secondary,
+        imageAsset: AppAssets.appLogo,
       ),
     ];
     return LayoutBuilder(
@@ -85,12 +88,16 @@ class _CircleSpec {
     required this.sizeFactor,
     required this.background,
     required this.icing,
+    this.imageAsset,
   });
 
   final Alignment alignment;
   final double sizeFactor;
   final Color background;
   final Color icing;
+
+  /// Shown instead of a drawn donut (the app logo in the middle circle).
+  final String? imageAsset;
 }
 
 class _DonutCircle extends StatelessWidget {
@@ -107,6 +114,16 @@ class _DonutCircle extends StatelessWidget {
     height: diameter,
     alignment: Alignment.center,
     decoration: BoxDecoration(color: spec.background, shape: BoxShape.circle),
-    child: DonutArt(icing: spec.icing, size: diameter * _donutRatio),
+    child: spec.imageAsset == null
+        ? DonutArt(icing: spec.icing, size: diameter * _donutRatio)
+        : ClipOval(
+            child: Image.asset(
+              spec.imageAsset!,
+              width: diameter,
+              height: diameter,
+              fit: BoxFit.cover,
+              semanticLabel: context.l10n.appTitle,
+            ),
+          ),
   );
 }

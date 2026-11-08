@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "updatedAt": "2026-11-07T00:00:00.000Z",
+  "version": 3,
+  "updatedAt": "2026-11-08T00:00:00.000Z",
   "data": [
     {
       "id": "p_coconut",
@@ -9,64 +9,141 @@
       "priceMmk": 3200,
       "isNew": true,
       "discountPercent": null,
-      "imageUrl": "/static/images/products/p_coconut.png",
-      "assetPath": "assets/images/products/p_coconut.png",
-      "description": "Enjoy our scrumptious donuts topped with toasted coconut flakes on a creamy vanilla glaze."
+      "imageUrl": "/static/images/products/p_coconut.jpg",
+      "assetPath": "assets/images/products/p_coconut.jpg",
+      "description": "Enjoy our scrumptious donuts topped with toasted coconut flakes on a creamy vanilla glaze. Soft inside, a little crunchy outside."
     },
     {
-      "id": "p_strawberry",
+      "id": "p_strawberry_ring",
       "code": "JD022124",
-      "name": "Strawberry Sprinkle",
-      "priceMmk": 2800,
+      "name": "Strawberry Pon Ring",
+      "priceMmk": 3000,
+      "isNew": true,
+      "discountPercent": 10,
+      "imageUrl": "/static/images/products/p_strawberry_ring.jpg",
+      "assetPath": "assets/images/products/p_strawberry_ring.jpg",
+      "description": "Chewy mochi-style ring dipped in strawberry glaze with freeze-dried berry bits."
+    },
+    {
+      "id": "p_matcha_ring",
+      "code": "JD022125",
+      "name": "Matcha Ring",
+      "priceMmk": 3500,
       "isNew": false,
       "discountPercent": 10,
-      "imageUrl": "/static/images/products/p_strawberry.png",
-      "assetPath": "assets/images/products/p_strawberry.png",
-      "description": "Classic ring donut dipped in strawberry icing with rainbow sprinkles."
+      "imageUrl": "/static/images/products/p_matcha_ring.jpg",
+      "assetPath": "assets/images/products/p_matcha_ring.jpg",
+      "description": "Pon ring with a Japanese matcha drizzle and a dusting of sugar."
     },
     {
-      "id": "p_chocolate",
-      "code": "JD022125",
-      "name": "Double Chocolate",
+      "id": "p_blueberry_frost",
+      "code": "JD022126",
+      "name": "Blueberry Frost",
+      "priceMmk": 3200,
+      "isNew": true,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_blueberry_frost.jpg",
+      "assetPath": "assets/images/products/p_blueberry_frost.jpg",
+      "description": "Blueberry icing finished with purple crunch sprinkles."
+    },
+    {
+      "id": "p_choco_sprinkle",
+      "code": "JD022127",
+      "name": "Chocolate Sprinkle",
+      "priceMmk": 2800,
+      "isNew": false,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_choco_sprinkle.jpg",
+      "assetPath": "assets/images/products/p_choco_sprinkle.jpg",
+      "description": "Classic ring donut dipped in dark chocolate and covered in chocolate sprinkles."
+    },
+    {
+      "id": "p_double_choc_ring",
+      "code": "JD022128",
+      "name": "Double Choc Ring",
+      "priceMmk": 3400,
+      "isNew": true,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_double_choc_ring.jpg",
+      "assetPath": "assets/images/products/p_double_choc_ring.jpg",
+      "description": "Chocolate pon ring with white chocolate stripes and brownie bites."
+    },
+    {
+      "id": "p_unicorn_sprinkle",
+      "code": "JD022129",
+      "name": "Unicorn Sprinkle",
+      "priceMmk": 3100,
+      "isNew": false,
+      "discountPercent": 15,
+      "imageUrl": "/static/images/products/p_unicorn_sprinkle.jpg",
+      "assetPath": "assets/images/products/p_unicorn_sprinkle.jpg",
+      "description": "Lilac glaze with a rainbow of sprinkles."
+    },
+    {
+      "id": "p_almond_crunch",
+      "code": "JD022130",
+      "name": "Almond Crunch",
       "priceMmk": 3500,
       "isNew": false,
       "discountPercent": null,
-      "imageUrl": "/static/images/products/p_chocolate.png",
-      "assetPath": "assets/images/products/p_chocolate.png",
-      "description": "Chocolate dough, chocolate glaze, chocolate drizzle."
+      "imageUrl": "/static/images/products/p_almond_crunch.jpg",
+      "assetPath": "assets/images/products/p_almond_crunch.jpg",
+      "description": "Chocolate glaze topped with roasted almond and granola crunch."
     },
     {
-      "id": "p_matcha",
-      "code": "JD022126",
-      "name": "Matcha Glaze",
-      "priceMmk": 3800,
-      "isNew": true,
-      "discountPercent": 15,
-      "imageUrl": "/static/images/products/p_matcha.png",
-      "assetPath": "assets/images/products/p_matcha.png",
-      "description": "Japanese matcha glaze with white chocolate crumble."
+      "id": "p_choco_peanut",
+      "code": "JD022131",
+      "name": "Choco Peanut Duo",
+      "priceMmk": 3600,
+      "isNew": false,
+      "discountPercent": null,
+      "imageUrl": "/static/images/products/p_choco_peanut.jpg",
+      "assetPath": "assets/images/products/p_choco_peanut.jpg",
+      "description": "Half chocolate, half caramel peanut — the best of both."
     },
     {
-      "id": "p_caramel",
-      "code": "JD022127",
-      "name": "Salted Caramel",
+      "id": "p_raspberry_bomboloni",
+      "code": "JD022132",
+      "name": "Raspberry Bomboloni",
       "priceMmk": 3300,
       "isNew": false,
       "discountPercent": null,
-      "imageUrl": "/static/images/products/p_caramel.png",
-      "assetPath": "assets/images/products/p_caramel.png",
-      "description": "Caramel-filled donut finished with sea salt flakes."
+      "imageUrl": "/static/images/products/p_raspberry_bomboloni.jpg",
+      "assetPath": "assets/images/products/p_raspberry_bomboloni.jpg",
+      "description": "Sugar-dusted Italian doughnut filled with raspberry jam."
     },
     {
-      "id": "p_iced_latte",
-      "code": "JD030001",
-      "name": "Iced Latte",
-      "priceMmk": 4500,
+      "id": "p_sugar_jam",
+      "code": "JD022133",
+      "name": "Sugar Jam Filled",
+      "priceMmk": 2900,
       "isNew": false,
       "discountPercent": null,
-      "imageUrl": "/static/images/products/p_iced_latte.png",
-      "assetPath": "assets/images/products/p_iced_latte.png",
-      "description": "Double-shot espresso over milk and ice."
+      "imageUrl": "/static/images/products/p_sugar_jam.jpg",
+      "assetPath": "assets/images/products/p_sugar_jam.jpg",
+      "description": "Pillowy doughnut rolled in sugar with a strawberry jam centre."
+    },
+    {
+      "id": "p_box_six",
+      "code": "JD030001",
+      "name": "Signature Box of 6",
+      "priceMmk": 16500,
+      "isNew": false,
+      "discountPercent": 15,
+      "imageUrl": "/static/images/products/p_box_six.jpg",
+      "assetPath": "assets/images/products/p_box_six.jpg",
+      "description": "Six of our signature donuts in one box — perfect for sharing."
+    },
+    {
+      "id": "p_classic_dozen",
+      "code": "JD030002",
+      "name": "Classic Dozen",
+      "priceMmk": 30000,
+      "isNew": false,
+      "discountPercent": 20,
+      "imageUrl": "/static/images/products/p_classic_dozen.jpg",
+      "assetPath": "assets/images/products/p_classic_dozen.jpg",
+      "description": "Twelve classic donuts, mixed glazes and sprinkles."
     }
   ]
 }

@@ -13,8 +13,8 @@ Short rationale for each choice. "Brief" = the code test requirement it answers.
 | Session | **flutter_secure_storage** | shared_preferences | Required by brief; token stored in Keychain/Keystore. |
 | Network | **Dio** | http | Required by brief (if server). Interceptors for timeout, retry and logging. |
 | Models | **freezed + json_serializable** | Hand-written classes | Immutable, `copyWith`, `==`, unions for state, JSON mapping without hand code. |
-| Images | **cached_network_image** | Image.network | Disk cache + placeholder + error builder (brief); bundled assets as offline fallback. |
-| Connectivity | **connectivity_plus** + `/v1/health` ping | connectivity_plus alone | It only reports the interface; a reachability call detects "Wi-Fi with no internet". |
+| Images | **cached_network_image** + **flutter_cache_manager** | Image.network; storing image bytes in Drift | Disk cache that survives restarts (30 days, max 300 files). Order: cached file → network (bundled asset as placeholder) → bundled asset → icon. Images are pre-downloaded after each sync so new products show offline too. Drift stores only `imageUrl` + `assetPath`. |
+| Connectivity | **connectivity_plus** + an internet lookup (3 s) | connectivity_plus alone; pinging the mock server | connectivity_plus only reports the interface; the lookup detects "Wi-Fi with no internet". It reflects the device's internet, not the mock server — a stopped server shouldn't tell the user they're offline. |
 | Lints | **very_good_analysis** | flutter_lints | Stricter; brief scores "analyze clean". |
 | Tests | **mocktail** | mockito | No codegen, null-safe mocks. |
 | l10n | **gen-l10n (ARB)** | easy_localization | Required by brief; built into Flutter; adds Burmese (`my`). |
@@ -38,3 +38,11 @@ Short rationale for each choice. "Brief" = the code test requirement it answers.
 | All durations/curves in `app_motion.dart` | Brief: named constants in one motion file; one place to honour Reduce Motion. |
 | Design tokens in one theme (`ColorScheme` + `ThemeExtension`) | Brief: no hard-coded colours in widgets. Palette sampled from the PDF screens; see `docs/knowledge-base/design_system.md`. |
 | Monorepo: `app/`, `mock_server/`, `docs/` | App, optional server and specs are kept together. |
+| Product detail quantity starts at 0; the first + reveals Add to cart | Product owner's UX choice: the bar springs up from the bottom on the first +. Once shown, the quantity never goes below 1 while adding; going back to 0 hides the bar. Deviates slightly from the brief's "minimum 1". |
+| Product detail is a child of the Home tab (`/home/product/:id`) | A Hero only flies between pages of the same Navigator; Home lives in the shell's branch navigator. The bottom nav slides away on this route so the screen is still full-screen. |
+| Bottom-edge blur + fade (`AppBottomFade`) | Same technique as vint_flutter's feed: stacked backdrop-blur bands plus a background-coloured gradient, because Flutter has no masked backdrop blur. |
+| Retry via **dio_smart_retry** | Dio has no built-in retry, only interceptors; `dio_smart_retry` is the standard Dio retry interceptor (loop, delays, cancel, `disableRetry`). We plug in our own `RetryPolicy`: GET only, max 3, never 4xx, 400 ms → 1.6 s with jitter. |
+| Sync = replace the whole catalog in one transaction | Seed and sync share `CatalogWriter`: rows the server removed disappear, and a network or format error leaves the old cache untouched. Drift streams emit once, so the UI updates in one go. |
+| Platform default for the mock server address | Android emulator uses `10.0.2.2`, iOS simulator `localhost`, so it runs with no flags. Cleartext HTTP is allowed only for those hosts (Android network security config, iOS `NSAllowsLocalNetworking`). |
+| Pull-to-refresh with a donut (`CupertinoSliverRefreshControl`) | `RefreshIndicator` can't change its spinner; the SDK's sliver refresh control takes a custom builder, so no extra package. Needs bouncing physics, so Home bounces on Android too. |
+| Offline indicator: toast-like floating pill | Stays while offline (brief: "while offline"), then morphs to a green "You're back online" and floats away after 3 s. Looks like a toast — soft coloured shadow, blurred translucent fill, drops in with a spring — but follows the network state instead of being a one-off message. |

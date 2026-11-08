@@ -5,6 +5,7 @@ import 'package:jdonut/core/router/app_routes.dart';
 import 'package:jdonut/core/router/page_transitions.dart';
 import 'package:jdonut/features/auth/auth.dart';
 import 'package:jdonut/features/home/home.dart';
+import 'package:jdonut/features/product/product.dart';
 import 'package:jdonut/features/settings/settings.dart';
 import 'package:jdonut/features/shell/shell.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -59,21 +60,43 @@ GoRouter appRouter(Ref ref) {
 }
 
 StatefulShellRoute _shellRoute() => StatefulShellRoute.indexedStack(
-  pageBuilder: (_, state, shell) =>
-      fadePage(state, AppShell(navigationShell: shell)),
+  pageBuilder: (_, state, shell) => fadePage(
+    state,
+    AppShell(navigationShell: shell, location: state.uri.path),
+  ),
   branches: [
-    _branch(AppRoutes.home, (_) => const HomePage()),
-    _branch(
-      AppRoutes.order,
-      (context) => PlaceholderTabPage(title: context.l10n.navOrder),
+    StatefulShellBranch(
+      routes: [
+        GoRoute(
+          path: AppRoutes.home,
+          builder: (_, _) => const HomePage(),
+          routes: [
+            GoRoute(
+              path: AppRoutes.product,
+              pageBuilder: (_, state) => fadePage(
+                state,
+                ProductDetailPage(
+                  productId: state.pathParameters['id']!,
+                  heroScope:
+                      state.uri.queryParameters[AppRoutes.heroScopeParam],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     ),
     _branch(
       AppRoutes.reward,
       (context) => PlaceholderTabPage(title: context.l10n.navReward),
     ),
     _branch(
-      AppRoutes.shops,
-      (context) => PlaceholderTabPage(title: context.l10n.navShops),
+      AppRoutes.order,
+      (context) => PlaceholderTabPage(title: context.l10n.navOrder),
+    ),
+    _branch(
+      AppRoutes.wallet,
+      (context) => PlaceholderTabPage(title: context.l10n.navWallet),
     ),
     _branch(AppRoutes.settings, (_) => const SettingsPage()),
   ],

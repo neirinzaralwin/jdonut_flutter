@@ -1,4 +1,6 @@
+import 'package:flutter/services.dart';
 import 'package:jdonut/core/database/app_database.dart';
+import 'package:jdonut/core/database/seed/seed_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'database_provider.g.dart';
@@ -9,3 +11,7 @@ AppDatabase appDatabase(Ref ref) {
   ref.onDispose(database.close);
   return database;
 }
+
+@Riverpod(keepAlive: true)
+SeedService seedService(Ref ref) =>
+    SeedService(ref.watch(appDatabaseProvider), rootBundle);

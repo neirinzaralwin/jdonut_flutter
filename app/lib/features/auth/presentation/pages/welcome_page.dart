@@ -73,7 +73,7 @@ class _WelcomePageState extends ConsumerState<WelcomePage>
       (colors.primaryContainer, appColors.banner),
       (appColors.authGradientTop, colors.secondary),
       (appColors.homeHeader, colors.secondary),
-      (appColors.tierGold, colors.surface),
+      (appColors.tierGold.light, colors.surface),
     ];
     return GridView.count(
       crossAxisCount: _columns,

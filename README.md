@@ -1,10 +1,12 @@
-# J'Donuts — Senior Flutter Code Test
-
-A working slice of the J'Donuts customer app: onboarding with fake login and registration, an offline-first Home and Product detail, and an animated Rewards screen. Built to the Madivizion brief (10 screens, 3 tasks).
+# Educational Purpose Project for Code Test
 
 **▶ Demo video (app walkthrough + code explanation):** https://drive.google.com/file/d/1-BX3y4Yq-In29AOiuc4MM5tGWsw9ZoZm/view?usp=drive_link
 
 **Run it in 5 minutes:** [`START.md`](START.md) — copy-paste steps for reviewers.
+
+**Decisions I made and why** (packages, architecture, offline, UI deviations): [`DECISIONS.md`](DECISIONS.md)
+
+**For developers** (setup, daily commands, data reset, adding a feature): [`DEVELOPER_GUIDE.md`](DEVELOPER_GUIDE.md)
 
 ---
 

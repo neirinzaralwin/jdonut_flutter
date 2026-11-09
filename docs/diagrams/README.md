@@ -10,3 +10,4 @@ diagram in the same change that moves the code it shows.
 | [auth-diagram.md](auth-diagram.md) | Task 1: registration/login flow, guard, logout, file map | Touching auth, router, session |
 | [offline-data-diagram.md](offline-data-diagram.md) | Task 2: seed, sync, offline detection, image cache, file map | Touching data, network, images |
 | [home-product-diagram.md](home-product-diagram.md) | Task 2: Home and Product detail screens, navigation, motion, file map | Touching Home or Product UI |
+| [rewards-diagram.md](rewards-diagram.md) | Task 3: Rewards data flow, widgets, entrance | Touching Rewards |

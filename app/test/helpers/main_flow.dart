@@ -46,12 +46,13 @@ Future<void> registerNewUser(WidgetTester tester) async {
   await tester.enterText(find.byType(TextField).first, 'Ye Min');
   await tapText(tester, 'Continue');
 
-  // The month field is read-only and opens a picker sheet.
+  // The boxes open the native picker, which starts 13 years back (a valid
+  // birthday): accept it. iOS shows a wheel with "Select", Android a
+  // calendar with "OK".
   await tester.tap(find.text('Month'), warnIfMissed: false);
   await settle(tester);
-  await tapText(tester, 'January');
-  await tester.enterText(find.widgetWithText(TextField, 'Day'), '15');
-  await tester.enterText(find.widgetWithText(TextField, 'Year'), '1995');
+  final confirm = find.text('Select').evaluate().isNotEmpty ? 'Select' : 'OK';
+  await tapText(tester, confirm);
   await tapText(tester, 'Continue');
 
   await tapText(tester, "Let's explore");

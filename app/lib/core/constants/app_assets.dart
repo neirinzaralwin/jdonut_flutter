@@ -2,6 +2,13 @@
 abstract final class AppAssets {
   static const String appLogo = 'assets/images/onboarding/app_logo.png';
 
+  /// Transparent donut photos for the Onboarding circles and Welcome tiles.
+  static const String _donuts = 'assets/images/onboarding/donuts';
+  static const String donutPinkSprinkle = '$_donuts/pink_sprinkle.png';
+  static const String donutAlmondCrunch = '$_donuts/almond_crunch.png';
+  static const String donutChocolateDrizzle = '$_donuts/chocolate_drizzle.png';
+  static const String donutWhiteSprinkle = '$_donuts/white_sprinkle.png';
+
   /// Logo with a transparent background (placeholder image).
   static const String logoTransparent =
       'assets/images/branding/jdonuts_logo_transparent.png';

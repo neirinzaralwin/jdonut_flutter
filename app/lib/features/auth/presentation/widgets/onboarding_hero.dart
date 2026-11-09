@@ -3,7 +3,6 @@ import 'package:jdonut/core/constants/app_assets.dart';
 import 'package:jdonut/core/l10n/l10n.dart';
 import 'package:jdonut/core/motion/app_motion.dart';
 import 'package:jdonut/core/theme/theme.dart';
-import 'package:jdonut/core/widgets/donut_art.dart';
 import 'package:jdonut/core/widgets/staggered_entrance.dart';
 
 /// Donut circles that drift in from the edges (brief: Onboarding motion).
@@ -57,25 +56,25 @@ class OnboardingHero extends StatelessWidget {
     );
   }
 
-  /// Pairs [_layout] with theme colours (background, icing).
+  /// Pairs [_layout] with a backdrop colour and a donut photo; the centre
+  /// circle shows the app logo.
   List<_CircleSpec> _circles(BuildContext context) {
-    final colors = context.colors;
-    final appColors = context.appColors;
-    final paints = [
-      (colors.primary, appColors.tierGold.light),
-      (appColors.banner, colors.secondary),
-      (appColors.badge, colors.surface),
-      (colors.primaryContainer, colors.secondary),
-      (colors.surface, colors.secondary),
+    final backdrops = context.appColors.backdrops;
+    final art = [
+      (backdrops.sky, AppAssets.donutChocolateDrizzle),
+      (backdrops.periwinkle, AppAssets.donutWhiteSprinkle),
+      (backdrops.mist, AppAssets.donutPinkSprinkle),
+      (backdrops.butter, AppAssets.donutAlmondCrunch),
+      (Colors.transparent, AppAssets.appLogo),
     ];
     return [
       for (final (index, (alignment, size)) in _layout.indexed)
         _CircleSpec(
           alignment: alignment,
           sizeFactor: size,
-          background: paints[index].$1,
-          icing: paints[index].$2,
-          imageAsset: index == _layout.length - 1 ? AppAssets.appLogo : null,
+          background: art[index].$1,
+          imageAsset: art[index].$2,
+          isLogo: index == _layout.length - 1,
         ),
     ];
   }
@@ -86,17 +85,15 @@ class _CircleSpec {
     required this.alignment,
     required this.sizeFactor,
     required this.background,
-    required this.icing,
-    this.imageAsset,
+    required this.imageAsset,
+    this.isLogo = false,
   });
 
   final Alignment alignment;
   final double sizeFactor;
   final Color background;
-  final Color icing;
-
-  /// Shown instead of a drawn donut (the app logo in the middle circle).
-  final String? imageAsset;
+  final String imageAsset;
+  final bool isLogo;
 }
 
 class _DonutCircle extends StatelessWidget {
@@ -105,24 +102,35 @@ class _DonutCircle extends StatelessWidget {
   final _CircleSpec spec;
   final double diameter;
 
-  static const double _donutRatio = 0.62;
+  /// Share of the circle the photo fills. The logo is drawn alone (no
+  /// backdrop), 20% smaller than its slot.
+  static const double _donutRatio = 0.72;
+  static const double _logoRatio = 0.8;
 
   @override
-  Widget build(BuildContext context) => Container(
-    width: diameter,
-    height: diameter,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(color: spec.background, shape: BoxShape.circle),
-    child: spec.imageAsset == null
-        ? DonutArt(icing: spec.icing, size: diameter * _donutRatio)
-        : ClipOval(
-            child: Image.asset(
-              spec.imageAsset!,
-              width: diameter,
-              height: diameter,
-              fit: BoxFit.cover,
-              semanticLabel: context.l10n.appTitle,
-            ),
-          ),
-  );
+  Widget build(BuildContext context) {
+    final size = diameter * (spec.isLogo ? _logoRatio : _donutRatio);
+    final pixels = (size * MediaQuery.devicePixelRatioOf(context)).round();
+    return Container(
+      width: diameter,
+      height: diameter,
+      alignment: Alignment.center,
+      // The logo is already round: no backdrop behind it.
+      decoration: spec.isLogo
+          ? null
+          : BoxDecoration(color: spec.background, shape: BoxShape.circle),
+      child: ClipOval(
+        clipBehavior: spec.isLogo ? Clip.antiAlias : Clip.none,
+        child: Image.asset(
+          spec.imageAsset,
+          width: size,
+          height: size,
+          fit: BoxFit.contain,
+          cacheWidth: pixels,
+          semanticLabel: spec.isLogo ? context.l10n.appTitle : null,
+          excludeFromSemantics: !spec.isLogo,
+        ),
+      ),
+    );
+  }
 }

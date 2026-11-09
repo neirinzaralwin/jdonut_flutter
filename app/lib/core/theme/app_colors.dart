@@ -40,6 +40,14 @@ abstract final class AppPalette {
   static const Color tierPlatinumDark = Color(0xFF64DEFC);
 
   // Illustration (DonutArt painter only)
+  // Backdrops behind the donut photos (Onboarding circles, Welcome tiles).
+  static const Color backdropMist = Color(0xFFBCD8EA);
+  static const Color backdropPeriwinkle = Color(0xFFB4CAEE);
+  static const Color backdropButter = Color(0xFFFDD27C);
+  static const Color backdropPeach = Color(0xFFF8DED4);
+  static const Color backdropBlush = Color(0xFFF7C9DB);
+  static const Color backdropApricot = Color(0xFFFDB547);
+
   static const Color dough = Color(0xFFE2A469);
   static const Color doughShadow = Color(0xFFC07F45);
   static const Color chocolate = Color(0xFF6B3E26);

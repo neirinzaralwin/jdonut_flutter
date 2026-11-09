@@ -20,6 +20,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     required this.tierGold,
     required this.tierPlatinum,
     required this.success,
+    required this.backdrops,
   });
 
   static const AppColorsExtension light = AppColorsExtension(
@@ -46,6 +47,15 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
       AppPalette.tierPlatinumDark,
     ),
     success: AppPalette.success,
+    backdrops: DonutBackdrops(
+      sky: AppPalette.sky,
+      mist: AppPalette.backdropMist,
+      periwinkle: AppPalette.backdropPeriwinkle,
+      butter: AppPalette.backdropButter,
+      peach: AppPalette.backdropPeach,
+      blush: AppPalette.backdropBlush,
+      apricot: AppPalette.backdropApricot,
+    ),
   );
 
   final Color link;
@@ -64,12 +74,36 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
   final TierColors tierGold;
   final TierColors tierPlatinum;
   final Color success;
+  final DonutBackdrops backdrops;
 
   @override
   AppColorsExtension copyWith() => this;
 
   @override
   AppColorsExtension lerp(AppColorsExtension? other, double t) => this;
+}
+
+/// Soft colours behind the donut photos on Onboarding and Welcome, picked
+/// from the design's circles and tiles.
+@immutable
+class DonutBackdrops {
+  const DonutBackdrops({
+    required this.sky,
+    required this.mist,
+    required this.periwinkle,
+    required this.butter,
+    required this.peach,
+    required this.blush,
+    required this.apricot,
+  });
+
+  final Color sky;
+  final Color mist;
+  final Color periwinkle;
+  final Color butter;
+  final Color peach;
+  final Color blush;
+  final Color apricot;
 }
 
 /// A tier's light → dark pair, matching its badge icon.

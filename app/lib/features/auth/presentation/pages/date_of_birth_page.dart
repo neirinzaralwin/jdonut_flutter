@@ -1,14 +1,8 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:jdonut/core/constants/app_constants.dart';
 import 'package:jdonut/core/l10n/l10n.dart';
-import 'package:jdonut/core/theme/theme.dart';
 import 'package:jdonut/core/widgets/app_button.dart';
-import 'package:jdonut/core/widgets/app_text_field.dart';
 import 'package:jdonut/features/auth/domain/entities/auth_mode.dart';
 import 'package:jdonut/features/auth/domain/validators/date_of_birth_validator.dart';
 import 'package:jdonut/features/auth/presentation/auth_progress.dart';
@@ -16,7 +10,11 @@ import 'package:jdonut/features/auth/presentation/providers/auth_dependencies.da
 import 'package:jdonut/features/auth/presentation/providers/register_notifier.dart';
 import 'package:jdonut/features/auth/presentation/providers/registration_draft.dart';
 import 'package:jdonut/features/auth/presentation/widgets/auth_step_scaffold.dart';
+import 'package:jdonut/features/auth/presentation/widgets/birth_date_boxes.dart';
+import 'package:jdonut/features/auth/presentation/widgets/birthday_picker.dart';
 
+/// Screen 6: Month / Day / Year boxes like the design; tapping one opens the
+/// native date picker (wheel on iOS, calendar on Android).
 class DateOfBirthPage extends ConsumerStatefulWidget {
   const DateOfBirthPage({super.key});
 
@@ -26,13 +24,6 @@ class DateOfBirthPage extends ConsumerStatefulWidget {
 
 class _DateOfBirthPageState extends ConsumerState<DateOfBirthPage> {
   late DateTime _pickedDate;
-  final TextEditingController _birthdayController = TextEditingController();
-
-  @override
-  void dispose() {
-    _birthdayController.dispose();
-    super.dispose();
-  }
 
   @override
   void initState() {
@@ -102,14 +93,6 @@ class _DateOfBirthPageState extends ConsumerState<DateOfBirthPage> {
         draft.birthMonth != null &&
         draft.birthDay.isNotEmpty &&
         draft.birthYear.length == 4;
-    final birthdayText = isComplete
-        ? DateFormat.yMMMMd(
-            Localizations.localeOf(context).toString(),
-          ).format(_pickedDate)
-        : '';
-    if (_birthdayController.text != birthdayText) {
-      _birthdayController.text = birthdayText;
-    }
     final submit = ref.watch(registerSubmitProvider);
     return AuthStepScaffold(
       title: context.l10n.dobTitle,
@@ -121,22 +104,10 @@ class _DateOfBirthPageState extends ConsumerState<DateOfBirthPage> {
         AuthProgress.dateOfBirthStep,
         AuthMode.register,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AppTextField(
-            key: const ValueKey('birthday-picker-field'),
-            controller: _birthdayController,
-            hintText: context.l10n.selectBirthday,
-            readOnly: true,
-            onTap: _openPicker,
-            suffixIcon: Icon(
-              Icons.calendar_month_outlined,
-              color: context.colors.onSurfaceVariant,
-            ),
-            errorText: isComplete ? _message(error) : null,
-          ),
-        ],
+      body: BirthDateBoxes(
+        date: isComplete ? _pickedDate : null,
+        onTap: _openPicker,
+        errorText: isComplete ? _message(error) : null,
       ),
       action: AppButton(
         label: context.l10n.continueLabel,
@@ -149,100 +120,15 @@ class _DateOfBirthPageState extends ConsumerState<DateOfBirthPage> {
   }
 
   Future<void> _openPicker() async {
-    if (Platform.isIOS) {
-      await _showCupertinoPicker();
-    } else {
-      await _showMaterialPicker();
-    }
-  }
-
-  Future<void> _showMaterialPicker() async {
-    final today = ref.read(clockProvider)();
-    final selected = await showDatePicker(
-      context: context,
-      initialDate: _pickedDate.isAfter(today) ? today : _pickedDate,
-      firstDate: DateTime(1900),
-      lastDate: today,
-      helpText: context.l10n.selectBirthday,
+    final selected = await showBirthdayPicker(
+      context,
+      initial: _pickedDate,
+      today: ref.read(clockProvider)(),
     );
+    if (!mounted) return;
+    // The boxes are display-only: don't leave one looking focused.
+    FocusScope.of(context).unfocus();
     if (selected != null) _setDate(selected);
-  }
-
-  Future<void> _showCupertinoPicker() async {
-    final today = ref.read(clockProvider)();
-    var selected = _pickedDate.isAfter(today) ? today : _pickedDate;
-    final result = await showModalBottomSheet<DateTime>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: context.colors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(AppRadii.sheet),
-        ),
-      ),
-      builder: (sheetContext) => SafeArea(
-        top: false,
-        child: SizedBox(
-          height: 390,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.s5,
-                  AppSpacing.s4,
-                  AppSpacing.s3,
-                  AppSpacing.s2,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        context.l10n.selectBirthday,
-                        style: context.text.titleLarge?.copyWith(
-                          color: context.colors.primary,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      tooltip: MaterialLocalizations.of(
-                        context,
-                      ).closeButtonTooltip,
-                      onPressed: () => Navigator.of(sheetContext).pop(),
-                      icon: const Icon(Icons.close),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
-                  initialDateTime: selected,
-                  maximumDate: today,
-                  minimumDate: DateTime(1900),
-                  onDateTimeChanged: (date) => selected = date,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.s5,
-                  AppSpacing.s2,
-                  AppSpacing.s5,
-                  AppSpacing.s4,
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: () => Navigator.of(sheetContext).pop(selected),
-                    child: Text(context.l10n.select),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-    if (result != null) _setDate(result);
   }
 
   String? _message(DateOfBirthError? error) => switch (error) {
